@@ -80,7 +80,7 @@
             display: inline-block;
             background-color: var(--primary-red);
             color: #fff;
-            padding: 0.85rem 2rem;
+            padding: 0.85rem 2.2rem;
             border-radius: 5px;
             text-decoration: none;
             font-weight: 700;
@@ -88,8 +88,6 @@
             transition: transform 0.2s, background-color 0.2s;
         }
         .btn:hover { background-color: var(--primary-red-hover); transform: translateY(-2px); }
-        .btn-outline { background-color: transparent; border: 2px solid var(--primary-red); color: var(--text-light); }
-        .btn-outline:hover { background-color: var(--primary-red); color: #fff; }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
         .section-title {
@@ -186,8 +184,7 @@
                 <h1>FORMULA 0 <span>BH</span></h1>
                 <p>Campeonato amador de kart da grande BH. 3 CORRIDAS em busca da glória.</p>
                 <div class="hero-buttons">
-                    <a href="https://forms.gle/BT6fLwktwiaLsuBX6" target="_blank" class="btn">Fazer Inscrição</a>
-                    <a href="#pilotos" class="btn btn-outline">Ver Pilotos</a>
+                    <a href="#pilotos" class="btn">Ver Pilotos</a>
                 </div>
             </div>
             <div class="hero-image-wrapper">
@@ -336,6 +333,25 @@
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
 
+        const extrasPilotos = {
+            "marcello-mascarenhas": { nomeCurto: 'Marcello "Maia" Mascarenhas' },
+            "augusto-mesquita": { nomeCurto: 'Augusto "Gutin" Mesquita' },
+            "joao-rezende": { nomeCurto: 'João Victor "Rezende"' },
+            "gabriel-neves": { nomeCurto: 'Gabriel "Neves"' },
+            "luca-brito": { nomeCurto: 'Luca "Cabrito" Brito' },
+            "henrique-malvar": { nomeCurto: 'Henrique "Malvar"' },
+            "arthur-magalhaes": { nomeCurto: 'Arthur "FELLA" Magalhães' },
+            "davi-costa": { nomeCurto: 'Davi Costa' },
+            "felipe-alves": { nomeCurto: 'Felipe "Felps" Fernandes' },
+            "gabriel-tavares": { nomeCurto: 'Gabriel "Tavares"' },
+            "vitor-genelhu": { nomeCurto: 'Vitor "Vitin" Genelhu' },
+            "flavio-brandao": { nomeCurto: 'Flávio "Flavin" Brandão' },
+            "artur-anastacio": { nomeCurto: 'Artur Santiago' },
+            "ednilson-monteiro": { nomeCurto: 'Ednilson "Ed do Fiesta" Monteiro' },
+            "edson-monteiro": { nomeCurto: 'Edson "Edinho" Monteiro' },
+            "gabriel-lemos": { nomeCurto: 'Gabriel Lemos' }
+        };
+
         function parseCSVLine(text) {
             let p = '', c = false, r = [];
             for (let i = 0; i < text.length; i++) {
@@ -392,10 +408,13 @@
                 tbody.innerHTML = '';
 
                 pilotos.forEach((p, idx) => {
+                    const extraInfo = extrasPilotos[p.id.toLowerCase()] || {};
+                    const nomeExibicao = extraInfo.nomeCurto || p.nome;
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${idx + 1}º</td>
-                        <td><a href="perfil.html?id=${encodeURIComponent(p.id)}" target="_blank" class="pilot-link">${p.nome}</a></td>
+                        <td><a href="perfil.html?id=${encodeURIComponent(p.id)}" class="pilot-link">${nomeExibicao}</a></td>
                         <td>${p.pontos} pts</td>
                         <td>${p.status}</td>
                     `;

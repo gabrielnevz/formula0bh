@@ -78,18 +78,38 @@
         }
 
         .profile-pic { width: 100%; height: 100%; object-fit: cover; }
+        
         .profile-info h1 { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
-        .profile-info .status-badge {
-            display: inline-block;
+        
+        .info-badges {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.8rem;
+            flex-wrap: wrap;
+        }
+        
+        .status-badge {
             background: var(--secondary-dark);
             color: var(--primary-red);
             border: 1px solid var(--border-color);
-            padding: 0.2rem 0.8rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-top: 0.5rem;
             text-transform: uppercase;
+        }
+
+        .dob-badge {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255,255,255,0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
         }
 
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
@@ -116,6 +136,7 @@
         @media (max-width: 600px) {
             .profile-card { flex-direction: column; text-align: center; gap: 1rem; }
             .profile-info h1 { font-size: 1.6rem; }
+            .info-badges { justify-content: center; }
         }
     </style>
 </head>
@@ -133,7 +154,10 @@
             </div>
             <div class="profile-info">
                 <h1 id="piloto-nome">Carregando...</h1>
-                <span class="status-badge" id="piloto-status">-</span>
+                <div class="info-badges">
+                    <span class="status-badge" id="piloto-status">-</span>
+                    <span class="dob-badge" id="piloto-nascimento" style="display: none;"></span>
+                </div>
             </div>
         </div>
 
@@ -180,9 +204,28 @@
 
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
-
         const params = new URLSearchParams(window.location.search);
         const pilotoId = params.get('id');
+
+        // Banco de dados interno extra com os Nomes e Datas de Nascimento
+        const extrasPilotos = {
+            "marcello-mascarenhas": { nomeCurto: 'Marcello "Maia" Mascarenhas', nascimento: '07/06/2004' },
+            "augusto-mesquita": { nomeCurto: 'Augusto "Gutin" Mesquita', nascimento: '14/07/2003' },
+            "joao-rezende": { nomeCurto: 'João Victor "Rezende"', nascimento: '31/12/2003' },
+            "gabriel-neves": { nomeCurto: 'Gabriel "Neves"', nascimento: '01/03/2004' },
+            "luca-brito": { nomeCurto: 'Luca "Cabrito" Brito', nascimento: '18/10/2003' },
+            "henrique-malvar": { nomeCurto: 'Henrique "Malvar"', nascimento: '31/03/2004' },
+            "arthur-magalhaes": { nomeCurto: 'Arthur "FELLA" Magalhães', nascimento: '08/10/2008' },
+            "davi-costa": { nomeCurto: 'Davi Costa', nascimento: '14/06/2007' },
+            "felipe-alves": { nomeCurto: 'Felipe "Felps" Fernandes', nascimento: '16/10/2003' },
+            "gabriel-tavares": { nomeCurto: 'Gabriel "Tavares"', nascimento: '25/09/2003' },
+            "vitor-genelhu": { nomeCurto: 'Vitor "Vitin" Genelhu', nascimento: '25/07/2003' },
+            "flavio-brandao": { nomeCurto: 'Flávio "Flavin" Brandão', nascimento: '18/10/2003' },
+            "artur-anastacio": { nomeCurto: 'Artur Santiago', nascimento: '05/03/2004' },
+            "ednilson-monteiro": { nomeCurto: 'Ednilson "Ed do Fiesta" Monteiro', nascimento: '02/08/2003' },
+            "edson-monteiro": { nomeCurto: 'Edson "Edinho" Monteiro', nascimento: '20/04/2006' },
+            "gabriel-lemos": { nomeCurto: 'Gabriel Lemos', nascimento: '10/04/2004' }
+        };
 
         function parseCSVLine(text) {
             let p = '', c = false, r = [];
@@ -200,6 +243,19 @@
             if (!val || val === '-' || val.toLowerCase().includes('disputar')) return null;
             const match = val.match(/\d+/);
             return match ? parseInt(match[0], 10) : null;
+        }
+
+        function calcularIdade(dataString) {
+            if (!dataString) return '';
+            const parts = dataString.split('/');
+            const dataNasc = new Date(parts[2], parts[1] - 1, parts[0]);
+            const hoje = new Date();
+            let idade = hoje.getFullYear() - dataNasc.getFullYear();
+            const m = hoje.getMonth() - dataNasc.getMonth();
+            if (m < 0 || (m === 0 && hoje.getDate() < dataNasc.getDate())) {
+                idade--;
+            }
+            return idade;
         }
 
         async function carregarPerfil() {
@@ -253,9 +309,21 @@
                     return;
                 }
 
-                document.title = `${piloto.nome} | Perfil - FORMULA 0 BH`;
-                document.getElementById('piloto-nome').innerText = piloto.nome;
+                // Injetando os Dados Extras no HTML
+                const extraInfo = extrasPilotos[piloto.id.toLowerCase()] || {};
+                const nomeExibicao = extraInfo.nomeCurto || piloto.nome;
+
+                document.title = `${nomeExibicao} | Perfil - FORMULA 0 BH`;
+                document.getElementById('piloto-nome').innerText = nomeExibicao;
                 document.getElementById('piloto-status').innerText = piloto.status;
+                
+                // Trata a Data de Nascimento e calcula a Idade
+                if (extraInfo.nascimento) {
+                    const idade = calcularIdade(extraInfo.nascimento);
+                    const divNascimento = document.getElementById('piloto-nascimento');
+                    divNascimento.style.display = 'flex';
+                    divNascimento.innerHTML = `🎂 ${extraInfo.nascimento} <strong>(${idade} anos)</strong>`;
+                }
                 
                 let caminhoFoto = piloto.foto.replace('../', '').replace(/^\//, '');
                 document.getElementById('piloto-foto').src = caminhoFoto;
