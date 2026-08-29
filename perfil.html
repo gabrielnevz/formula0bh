@@ -15,6 +15,7 @@
             --primary-red-hover: #B80710;
             --secondary-dark: #1F1F1F;
             --gold: #FFD700;
+            --silver: #C0C0C0;
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
             --border-color: #2A2A2A;
@@ -84,21 +85,23 @@
         .info-badges {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 0.8rem;
             flex-wrap: wrap;
         }
         
         .status-badge {
-            background: var(--secondary-dark);
-            color: var(--primary-red);
-            border: 1px solid var(--border-color);
+            display: inline-block;
             padding: 0.3rem 0.8rem;
             border-radius: 4px;
             font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
         }
+        .status-lider { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+        .status-vice { background: rgba(192, 192, 192, 0.15); color: var(--silver); border: 1px solid var(--silver); }
+        .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
+        .status-disputar { background: var(--secondary-dark); color: var(--text-gray); border: 1px solid var(--border-color); }
 
         .dob-badge {
             color: var(--text-gray);
@@ -155,7 +158,7 @@
             <div class="profile-info">
                 <h1 id="piloto-nome">Carregando...</h1>
                 <div class="info-badges">
-                    <span class="status-badge" id="piloto-status">-</span>
+                    <span id="piloto-status" class="status-badge status-disputar">A disputar</span>
                     <span class="dob-badge" id="piloto-nascimento" style="display: none;"></span>
                 </div>
             </div>
@@ -207,24 +210,24 @@
         const params = new URLSearchParams(window.location.search);
         const pilotoId = params.get('id');
 
-        // Banco de dados interno extra com os Nomes e Datas de Nascimento
-        const extrasPilotos = {
-            "marcello-mascarenhas": { nomeCurto: 'Marcello "Maia" Mascarenhas', nascimento: '07/06/2004' },
-            "augusto-mesquita": { nomeCurto: 'Augusto "Gutin" Mesquita', nascimento: '14/07/2003' },
-            "joao-rezende": { nomeCurto: 'João Victor "Rezende"', nascimento: '31/12/2003' },
-            "gabriel-neves": { nomeCurto: 'Gabriel "Neves"', nascimento: '01/03/2004' },
-            "luca-brito": { nomeCurto: 'Luca "Cabrito" Brito', nascimento: '18/10/2003' },
-            "henrique-malvar": { nomeCurto: 'Henrique "Malvar"', nascimento: '31/03/2004' },
-            "arthur-magalhaes": { nomeCurto: 'Arthur "FELLA" Magalhães', nascimento: '08/10/2008' },
-            "davi-costa": { nomeCurto: 'Davi Costa', nascimento: '14/06/2007' },
-            "felipe-alves": { nomeCurto: 'Felipe "Felps" Fernandes', nascimento: '16/10/2003' },
-            "gabriel-tavares": { nomeCurto: 'Gabriel "Tavares"', nascimento: '25/09/2003' },
-            "vitor-genelhu": { nomeCurto: 'Vitor "Vitin" Genelhu', nascimento: '25/07/2003' },
-            "flavio-brandao": { nomeCurto: 'Flávio "Flavin" Brandão', nascimento: '18/10/2003' },
-            "artur-anastacio": { nomeCurto: 'Artur Santiago', nascimento: '05/03/2004' },
-            "ednilson-monteiro": { nomeCurto: 'Ednilson "Ed do Fiesta" Monteiro', nascimento: '02/08/2003' },
-            "edson-monteiro": { nomeCurto: 'Edson "Edinho" Monteiro', nascimento: '20/04/2006' },
-            "gabriel-lemos": { nomeCurto: 'Gabriel Lemos', nascimento: '10/04/2004' }
+        // Mapeamento dos apelidos e datas de nascimento
+        const dadosPilotos = {
+            "marcello-mascarenhas": { apelido: 'Marcello "Maia" Mascarenhas', nascimento: '07/06/2004' },
+            "augusto-mesquita": { apelido: 'Augusto "Gutin" Mesquita', nascimento: '14/07/2003' },
+            "joao-rezende": { apelido: 'João Victor "Rezende"', nascimento: '31/12/2003' },
+            "gabriel-neves": { apelido: 'Gabriel "Neves"', nascimento: '01/03/2004' },
+            "luca-brito": { apelido: 'Luca "Cabrito" Brito', nascimento: '18/10/2003' },
+            "henrique-malvar": { apelido: 'Henrique "Malvar"', nascimento: '31/03/2004' },
+            "arthur-magalhaes": { apelido: 'Arthur "FELLA" Magalhães', nascimento: '08/10/2008' },
+            "davi-costa": { apelido: 'Davi Costa', nascimento: '14/06/2007' },
+            "felipe-alves": { apelido: 'Felipe "Felps" Fernandes', nascimento: '16/10/2003' },
+            "gabriel-tavares": { apelido: 'Gabriel "Tavares"', nascimento: '25/09/2003' },
+            "vitor-genelhu": { apelido: 'Vitor "Vitin" Genelhu', nascimento: '25/07/2003' },
+            "flavio-brandao": { apelido: 'Flávio "Flavin" Brandão', nascimento: '18/10/2003' },
+            "artur-anastacio": { apelido: 'Artur Santiago', nascimento: '05/03/2004' },
+            "ednilson-monteiro": { apelido: 'Ednilson "Ed do Fiesta" Monteiro', nascimento: '02/08/2003' },
+            "edson-monteiro": { apelido: 'Edson "Edinho" Monteiro', nascimento: '20/04/2006' },
+            "gabriel-lemos": { apelido: 'Gabriel Lemos', nascimento: '10/04/2004' }
         };
 
         function parseCSVLine(text) {
@@ -269,6 +272,10 @@
                 const pilotos = lines.map(line => {
                     const row = parseCSVLine(line);
 
+                    const e1_raw = (row[4] || '').toUpperCase();
+                    const e2_raw = (row[6] || '').toUpperCase();
+                    const e3_raw = (row[8] || '').toUpperCase();
+
                     const e1_num = extrairPosicao(row[4]);
                     const e2_num = extrairPosicao(row[6]);
                     const e3_num = extrairPosicao(row[8]);
@@ -277,11 +284,15 @@
                     const vitoriasCalculadas = etapasConcluidas.filter(p => p === 1).length;
                     const podiosCalculados = etapasConcluidas.filter(p => p !== null && p >= 1 && p <= 3).length;
 
+                    let ultimaEtapa = '';
+                    if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw;
+                    else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw;
+                    else if (row[4] && row[4] !== '-') ultimaEtapa = e1_raw;
+
                     return {
                         id: row[0] || '',
                         nome: row[1] || '',
                         foto: row[2] || '',
-                        status: row[3] || 'A disputar',
                         e1_pos: row[4] || '-',
                         e1_pts: row[5] || '0',
                         e2_pos: row[6] || '-',
@@ -290,7 +301,8 @@
                         e3_pts: row[9] || '0',
                         vitorias: vitoriasCalculadas,
                         podios: podiosCalculados,
-                        pontos: parseFloat(row[12]) || 0
+                        pontos: parseFloat(row[12]) || 0,
+                        ultimaEtapa: ultimaEtapa
                     };
                 });
 
@@ -301,6 +313,9 @@
                     return a.nome.localeCompare(b.nome);
                 });
 
+                const maxPontos = pilotos.reduce((max, p) => Math.max(max, p.pontos), 0);
+                const campeonatoIniciado = maxPontos > 0;
+
                 const indexGeral = pilotos.findIndex(p => p.id.toLowerCase() === (pilotoId || '').toLowerCase());
                 const piloto = pilotos[indexGeral];
 
@@ -309,20 +324,38 @@
                     return;
                 }
 
-                // Injetando os Dados Extras no HTML
-                const extraInfo = extrasPilotos[piloto.id.toLowerCase()] || {};
-                const nomeExibicao = extraInfo.nomeCurto || piloto.nome;
+                const infoExtra = dadosPilotos[piloto.id.toLowerCase()] || {};
+                const nomePerfil = infoExtra.apelido || piloto.nome;
 
-                document.title = `${nomeExibicao} | Perfil - FORMULA 0 BH`;
-                document.getElementById('piloto-nome').innerText = nomeExibicao;
-                document.getElementById('piloto-status').innerText = piloto.status;
+                document.title = `${nomePerfil} | Perfil - FORMULA 0 BH`;
+                document.getElementById('piloto-nome').innerText = nomePerfil;
                 
-                // Trata a Data de Nascimento e calcula a Idade
-                if (extraInfo.nascimento) {
-                    const idade = calcularIdade(extraInfo.nascimento);
-                    const divNascimento = document.getElementById('piloto-nascimento');
-                    divNascimento.style.display = 'flex';
-                    divNascimento.innerHTML = `🎂 ${extraInfo.nascimento} <strong>(${idade} anos)</strong>`;
+                // Status Personalizado
+                const statusBadge = document.getElementById('piloto-status');
+                if (campeonatoIniciado) {
+                    if (piloto.ultimaEtapa.includes('DNS')) {
+                        statusBadge.className = 'status-badge status-dns';
+                        statusBadge.innerText = 'DNS';
+                    } else if (indexGeral === 0 && piloto.pontos > 0) {
+                        statusBadge.className = 'status-badge status-lider';
+                        statusBadge.innerText = '👑 Líder';
+                    } else if (indexGeral === 1 && piloto.pontos > 0) {
+                        statusBadge.className = 'status-badge status-vice';
+                        statusBadge.innerText = '🥈 Vice-Líder';
+                    } else {
+                        statusBadge.style.display = 'none';
+                    }
+                } else {
+                    statusBadge.className = 'status-badge status-disputar';
+                    statusBadge.innerText = 'A disputar';
+                }
+                
+                // Data de Nascimento
+                if (infoExtra.nascimento) {
+                    const idade = calcularIdade(infoExtra.nascimento);
+                    const divNasc = document.getElementById('piloto-nascimento');
+                    divNasc.style.display = 'flex';
+                    divNasc.innerHTML = `🎂 ${infoExtra.nascimento} <strong>(${idade} anos)</strong>`;
                 }
                 
                 let caminhoFoto = piloto.foto.replace('../', '').replace(/^\//, '');

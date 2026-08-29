@@ -15,6 +15,7 @@
             --primary-red-hover: #ff2a36;
             --secondary-dark: #1F1F1F;
             --gold: #FFD700;
+            --silver: #C0C0C0;
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
             --border-color: #2A2A2A;
@@ -146,6 +147,19 @@
 
         .pilot-link { color: var(--primary-red); text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.2s ease; }
         .pilot-link:hover { color: var(--primary-red-hover); text-decoration: underline; transform: translateX(3px); }
+
+        .status-tag {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        .status-lider { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
+        .status-vice { background: rgba(192, 192, 192, 0.15); color: var(--silver); border: 1px solid var(--silver); }
+        .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
+        .status-default { color: var(--text-gray); }
 
         .rules-list { list-style: none; display: grid; gap: 1.5rem; }
         .rules-item { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem; }
@@ -333,25 +347,6 @@
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
 
-        const extrasPilotos = {
-            "marcello-mascarenhas": { nomeCurto: 'Marcello "Maia" Mascarenhas' },
-            "augusto-mesquita": { nomeCurto: 'Augusto "Gutin" Mesquita' },
-            "joao-rezende": { nomeCurto: 'João Victor "Rezende"' },
-            "gabriel-neves": { nomeCurto: 'Gabriel "Neves"' },
-            "luca-brito": { nomeCurto: 'Luca "Cabrito" Brito' },
-            "henrique-malvar": { nomeCurto: 'Henrique "Malvar"' },
-            "arthur-magalhaes": { nomeCurto: 'Arthur "FELLA" Magalhães' },
-            "davi-costa": { nomeCurto: 'Davi Costa' },
-            "felipe-alves": { nomeCurto: 'Felipe "Felps" Fernandes' },
-            "gabriel-tavares": { nomeCurto: 'Gabriel "Tavares"' },
-            "vitor-genelhu": { nomeCurto: 'Vitor "Vitin" Genelhu' },
-            "flavio-brandao": { nomeCurto: 'Flávio "Flavin" Brandão' },
-            "artur-anastacio": { nomeCurto: 'Artur Santiago' },
-            "ednilson-monteiro": { nomeCurto: 'Ednilson "Ed do Fiesta" Monteiro' },
-            "edson-monteiro": { nomeCurto: 'Edson "Edinho" Monteiro' },
-            "gabriel-lemos": { nomeCurto: 'Gabriel Lemos' }
-        };
-
         function parseCSVLine(text) {
             let p = '', c = false, r = [];
             for (let i = 0; i < text.length; i++) {
@@ -380,6 +375,10 @@
                 
                 const pilotos = lines.map(line => {
                     const row = parseCSVLine(line);
+                    const e1_raw = (row[4] || '').toUpperCase();
+                    const e2_raw = (row[6] || '').toUpperCase();
+                    const e3_raw = (row[8] || '').toUpperCase();
+
                     const e1 = extrairPosicao(row[4]);
                     const e2 = extrairPosicao(row[6]);
                     const e3 = extrairPosicao(row[8]);
@@ -387,16 +386,23 @@
                     let vitorias = [e1, e2, e3].filter(p => p === 1).length;
                     let podios = [e1, e2, e3].filter(p => p !== null && p >= 1 && p <= 3).length;
 
+                    // Identifica o status da última etapa com registro
+                    let ultimaEtapa = '';
+                    if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw;
+                    else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw;
+                    else if (row[4] && row[4] !== '-') ultimaEtapa = e1_raw;
+
                     return {
                         id: row[0] || '',
                         nome: row[1] || '',
-                        status: row[3] || 'A disputar',
                         vitorias: vitorias,
                         podios: podios,
-                        pontos: parseFloat(row[12]) || 0
+                        pontos: parseFloat(row[12]) || 0,
+                        ultimaEtapa: ultimaEtapa
                     };
                 });
 
+                // Ordena por Pontos -> Vitórias -> Pódios -> Nome
                 pilotos.sort((a, b) => {
                     if (b.pontos !== a.pontos) return b.pontos - a.pontos;
                     if (b.vitorias !== a.vitorias) return b.vitorias - a.vitorias;
@@ -404,19 +410,33 @@
                     return a.nome.localeCompare(b.nome);
                 });
 
+                const maxPontos = pilotos.reduce((max, p) => Math.max(max, p.pontos), 0);
+                const campeonatoIniciado = maxPontos > 0;
+
                 const tbody = document.getElementById('pilotos-tbody');
                 tbody.innerHTML = '';
 
                 pilotos.forEach((p, idx) => {
-                    const extraInfo = extrasPilotos[p.id.toLowerCase()] || {};
-                    const nomeExibicao = extraInfo.nomeCurto || p.nome;
+                    let statusHtml = '<span class="status-tag status-default">A disputar</span>';
+
+                    if (campeonatoIniciado) {
+                        if (p.ultimaEtapa.includes('DNS')) {
+                            statusHtml = '<span class="status-tag status-dns">DNS</span>';
+                        } else if (idx === 0 && p.pontos > 0) {
+                            statusHtml = '<span class="status-tag status-lider">👑 Líder</span>';
+                        } else if (idx === 1 && p.pontos > 0) {
+                            statusHtml = '<span class="status-tag status-vice">🥈 Vice-Líder</span>';
+                        } else {
+                            statusHtml = '<span class="status-tag status-default">-</span>';
+                        }
+                    }
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${idx + 1}º</td>
-                        <td><a href="perfil.html?id=${encodeURIComponent(p.id)}" class="pilot-link">${nomeExibicao}</a></td>
+                        <td><a href="perfil.html?id=${encodeURIComponent(p.id)}" class="pilot-link">${p.nome}</a></td>
                         <td>${p.pontos} pts</td>
-                        <td>${p.status}</td>
+                        <td>${statusHtml}</td>
                     `;
                     tbody.appendChild(tr);
                 });
