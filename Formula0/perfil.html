@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Piloto | FORMULA 0 BH</title>
+    
+    <!-- Favicon da Aba -->
+    <link rel="icon" type="image/jpeg" href="img/logo.jpg">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+            --primary-red: #E50914;
+            --primary-red-hover: #B80710;
+            --secondary-dark: #1F1F1F;
+            --gold: #FFD700;
+            --text-light: #F5F5F5;
+            --text-gray: #A0A0A0;
+            --border-color: #2A2A2A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid var(--primary-red);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.3rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-red);
+        }
+
+        .back-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--text-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: var(--primary-red);
+            color: #fff;
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+            width: 100%;
+        }
+
+        /* Card do Piloto */
+        .profile-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        .profile-pic-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-red);
+            overflow: hidden;
+            flex-shrink: 0;
+            background-color: var(--secondary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-pic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-info h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+
+        .profile-info .status-badge {
+            display: inline-block;
+            background: var(--secondary-dark);
+            color: var(--primary-red);
+            border: 1px solid var(--border-color);
+            padding: 0.2rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Grid de Estatísticas */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary-red);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 0.2rem;
+        }
+
+        /* Histórico de Corridas */
+        .section-subtitle {
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        th {
+            background-color: var(--secondary-dark);
+            color: var(--primary-red);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #050505;
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 600px) {
+            .profile-card {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            .profile-info h1 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header com botão de voltar -->
+    <header>
+        <a href="index.html" class="logo">FORMULA 0 <span>BH</span></a>
+        <a href="index.html" class="back-btn">← Voltar à Tabela</a>
+    </header>
+
+    <div class="container" id="perfil-container">
+        <!-- Card de Perfil do Piloto -->
+        <div class="profile-card">
+            <div class="profile-pic-container">
+                <img id="piloto-foto" src="" alt="Piloto" class="profile-pic" onerror="this.src='https://via.placeholder.com/150/141414/E50914?text=PILOTO'">
+            </div>
+            <div class="profile-info">
+                <h1 id="piloto-nome">Carregando...</h1>
+                <span class="status-badge" id="piloto-status">-</span>
+            </div>
+        </div>
+
+        <!-- Estatísticas do Campeonato -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-pontos">0</div>
+                <div class="stat-label">Pontos</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-posicao">-</div>
+                <div class="stat-label">Posição Geral</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-vitorias">0</div>
+                <div class="stat-label">Vitórias</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-podios">0</div>
+                <div class="stat-label">Pódios</div>
+            </div>
+        </div>
+
+        <!-- Histórico Corrida a Corrida -->
+        <h2 class="section-subtitle">Histórico de Etapas</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Etapa</th>
+                        <th>Data</th>
+                        <th>Kartódromo</th>
+                        <th>Posição</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody id="piloto-historico">
+                    <!-- Preenchido via JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>FORMULA 0 BH &copy; 2026 — Perfil Oficial do Piloto</p>
+    </footer>
+
+    <!-- Script de Carregamento Dinâmico Robusto -->
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
+
+        const params = new URLSearchParams(window.location.search);
+        const pilotoId = params.get('id');
+
+        // Parser de CSV que respeita aspas
+        function parseCSVLine(text) {
+            let p = '', c = false, r = [];
+            for (let i = 0; i < text.length; i++) {
+                let ch = text[i];
+                if (ch === '"') { c = !c; }
+                else if (ch === ',' && !c) { r.push(p); p = ''; }
+                else { p += ch; }
+            }
+            r.push(p);
+            return r.map(x => x.replace(/^"|"$/g, '').trim());
+        }
+
+        function extrairPosicao(val) {
+            if (!val || val === '-' || val.toLowerCase().includes('disputar')) return null;
+            const match = val.match(/\d+/);
+            return match ? parseInt(match[0], 10) : null;
+        }
+
+        async function carregarPerfil() {
+            try {
+                const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
+                const data = await response.text();
+                const lines = data.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
+                
+                lines.shift(); // Remove cabeçalho
+                
+                const pilotos = lines.map(line => {
+                    const row = parseCSVLine(line);
+
+                    const e1_num = extrairPosicao(row[4]);
+                    const e2_num = extrairPosicao(row[6]);
+                    const e3_num = extrairPosicao(row[8]);
+
+                    const etapasConcluidas = [e1_num, e2_num, e3_num];
+                    const vitoriasCalculadas = etapasConcluidas.filter(p => p === 1).length;
+                    const podiosCalculados = etapasConcluidas.filter(p => p !== null && p >= 1 && p <= 3).length;
+
+                    return {
+                        id: row[0] || '',
+                        nome: row[1] || '',
+                        foto: row[2] || '',
+                        status: row[3] || 'A disputar',
+                        e1_pos: row[4] || '-',
+                        e1_pts: row[5] || '0',
+                        e2_pos: row[6] || '-',
+                        e2_pts: row[7] || '0',
+                        e3_pos: row[8] || '-',
+                        e3_pts: row[9] || '0',
+                        vitorias: vitoriasCalculadas,
+                        podios: podiosCalculados,
+                        pontos: parseFloat(row[12]) || 0
+                    };
+                });
+
+                // Ordenação para determinar posição geral
+                pilotos.sort((a, b) => {
+                    if (b.pontos !== a.pontos) return b.pontos - a.pontos;
+                    if (b.vitorias !== a.vitorias) return b.vitorias - a.vitorias;
+                    if (b.podios !== a.podios) return b.podios - a.podios;
+                    return a.nome.localeCompare(b.nome);
+                });
+
+                const indexGeral = pilotos.findIndex(p => p.id.toLowerCase() === (pilotoId || '').toLowerCase());
+                const piloto = pilotos[indexGeral];
+
+                if (!piloto) {
+                    document.getElementById('piloto-nome').innerText = "Piloto não encontrado";
+                    return;
+                }
+
+                // Preenchimento dos dados
+                document.title = `${piloto.nome} | Perfil - FORMULA 0 BH`;
+                document.getElementById('piloto-nome').innerText = piloto.nome;
+                document.getElementById('piloto-status').innerText = piloto.status;
+                
+                let caminhoFoto = piloto.foto.replace('../img/', 'img/');
+                document.getElementById('piloto-foto').src = caminhoFoto;
+                
+                document.getElementById('piloto-pontos').innerText = piloto.pontos;
+                document.getElementById('piloto-posicao').innerText = `${indexGeral + 1}º`;
+                document.getElementById('piloto-vitorias').innerText = piloto.vitorias;
+                document.getElementById('piloto-podios').innerText = piloto.podios;
+
+                // Histórico de Etapas
+                const historicoTbody = document.getElementById('piloto-historico');
+                historicoTbody.innerHTML = `
+                    <tr>
+                        <td>1ª Etapa</td>
+                        <td>30/08/2026</td>
+                        <td>Betim (09h50)</td>
+                        <td>${piloto.e1_pos}</td>
+                        <td>${piloto.e1_pts} pts</td>
+                    </tr>
+                    <tr>
+                        <td>2ª Etapa</td>
+                        <td>01/11/2026</td>
+                        <td>Vespasiano</td>
+                        <td>${piloto.e2_pos}</td>
+                        <td>${piloto.e2_pts} pts</td>
+                    </tr>
+                    <tr>
+                        <td>3ª Etapa (Final)</td>
+                        <td>06/12/2026</td>
+                        <td>A Definir</td>
+                        <td>${piloto.e3_pos}</td>
+                        <td>${piloto.e3_pts} pts</td>
+                    </tr>
+                `;
+
+            } catch (error) {
+                console.error("Erro ao carregar perfil:", error);
+            }
+        }
+
+        carregarPerfil();
+    </script>
+</body>
+</html>
