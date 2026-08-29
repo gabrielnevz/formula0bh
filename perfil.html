@@ -210,7 +210,6 @@
         const params = new URLSearchParams(window.location.search);
         const pilotoId = params.get('id');
 
-        // Mapeamento dos apelidos e datas de nascimento
         const dadosPilotos = {
             "marcello-mascarenhas": { apelido: 'Marcello "Maia" Mascarenhas', nascimento: '07/06/2004' },
             "augusto-mesquita": { apelido: 'Augusto "Gutin" Mesquita', nascimento: '14/07/2003' },
@@ -218,7 +217,7 @@
             "gabriel-neves": { apelido: 'Gabriel "Neves"', nascimento: '01/03/2004' },
             "luca-brito": { apelido: 'Luca "Cabrito" Brito', nascimento: '18/10/2003' },
             "henrique-malvar": { apelido: 'Henrique "Malvar"', nascimento: '31/03/2004' },
-            "arthur-magalhaes": { apelido: 'Arthur "FELLA" Magalhães', nascimento: '08/10/2008' },
+            "arthur-magalhaes": { apelido: 'Arthur "FELLA" Magalhães', nascimento: '08/10/2004' },
             "davi-costa": { apelido: 'Davi Costa', nascimento: '14/06/2007' },
             "felipe-alves": { apelido: 'Felipe "Felps" Fernandes', nascimento: '16/10/2003' },
             "gabriel-tavares": { apelido: 'Gabriel "Tavares"', nascimento: '25/09/2003' },
@@ -330,7 +329,6 @@
                 document.title = `${nomePerfil} | Perfil - FORMULA 0 BH`;
                 document.getElementById('piloto-nome').innerText = nomePerfil;
                 
-                // Status Personalizado
                 const statusBadge = document.getElementById('piloto-status');
                 if (campeonatoIniciado) {
                     if (piloto.ultimaEtapa.includes('DNS')) {
@@ -350,7 +348,6 @@
                     statusBadge.innerText = 'A disputar';
                 }
                 
-                // Data de Nascimento
                 if (infoExtra.nascimento) {
                     const idade = calcularIdade(infoExtra.nascimento);
                     const divNasc = document.getElementById('piloto-nascimento');

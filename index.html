@@ -16,6 +16,7 @@
             --secondary-dark: #1F1F1F;
             --gold: #FFD700;
             --silver: #C0C0C0;
+            --instagram-pink: #E1306C;
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
             --border-color: #2A2A2A;
@@ -42,8 +43,21 @@
         .logo-text { font-weight: 900; font-size: 1.4rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         .logo-text span { color: var(--primary-red); }
 
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
         nav a { color: var(--text-light); text-decoration: none; margin-left: 1.5rem; font-weight: 700; font-size: 0.9rem; transition: color 0.3s; }
         nav a:hover { color: var(--primary-red); }
+
+        .nav-insta {
+            color: var(--instagram-pink) !important;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .nav-insta:hover { filter: brightness(1.2); }
 
         .hero {
             padding: 8.5rem 2rem 5rem;
@@ -89,6 +103,24 @@
             transition: transform 0.2s, background-color 0.2s;
         }
         .btn:hover { background-color: var(--primary-red-hover); transform: translateY(-2px); }
+
+        .btn-insta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #fff;
+            padding: 0.85rem 1.8rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: transform 0.2s, filter 0.2s;
+        }
+        .btn-insta:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.1);
+        }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
         .section-title {
@@ -165,7 +197,9 @@
         .rules-item { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem; }
         .rules-icon { background-color: var(--primary-red); color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; }
 
-        footer { text-align: center; padding: 2rem; background-color: #050505; color: var(--text-gray); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+        footer { text-align: center; padding: 2.5rem 1.5rem; background-color: #050505; color: var(--text-gray); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
+        footer a { color: var(--instagram-pink); text-decoration: none; font-weight: 700; }
+        footer a:hover { text-decoration: underline; }
 
         @media (max-width: 850px) {
             .hero-container { flex-direction: column-reverse; text-align: center; gap: 2rem; }
@@ -189,6 +223,7 @@
             <a href="#etapas">Etapas</a>
             <a href="#pontuacao">Pontuação</a>
             <a href="#regulamento">Regulamento</a>
+            <a href="https://www.instagram.com/formula0bh/" target="_blank" class="nav-insta">📸 @formula0bh</a>
         </nav>
     </header>
 
@@ -199,6 +234,7 @@
                 <p>Campeonato amador de kart da grande BH. 3 CORRIDAS em busca da glória.</p>
                 <div class="hero-buttons">
                     <a href="#pilotos" class="btn">Ver Pilotos</a>
+                    <a href="https://www.instagram.com/formula0bh/" target="_blank" class="btn-insta">📸 Seguir no Instagram</a>
                 </div>
             </div>
             <div class="hero-image-wrapper">
@@ -341,7 +377,8 @@
     </section>
 
     <footer>
-        <p>FORMULA 0 BH &copy; 2026 — Campeonato Amador de Kart</p>
+        <p style="margin-bottom: 0.5rem;">FORMULA 0 BH &copy; 2026 — Campeonato Amador de Kart</p>
+        <p>Acompanhe os bastidores e fotos oficiais no Instagram: <a href="https://www.instagram.com/formula0bh/" target="_blank">@formula0bh</a></p>
     </footer>
 
     <script>
@@ -386,7 +423,6 @@
                     let vitorias = [e1, e2, e3].filter(p => p === 1).length;
                     let podios = [e1, e2, e3].filter(p => p !== null && p >= 1 && p <= 3).length;
 
-                    // Identifica o status da última etapa com registro
                     let ultimaEtapa = '';
                     if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw;
                     else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw;
@@ -402,7 +438,6 @@
                     };
                 });
 
-                // Ordena por Pontos -> Vitórias -> Pódios -> Nome
                 pilotos.sort((a, b) => {
                     if (b.pontos !== a.pontos) return b.pontos - a.pontos;
                     if (b.vitorias !== a.vitorias) return b.vitorias - a.vitorias;
