@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FORMULA 0 BH | Campeonato Amador de Kart</title>
     
-    <!-- Ícone da Aba do Navegador (Favicon) -->
-    <link rel="icon" type="image/jpeg" href="img/logo.jpg">
-    
-    <!-- Google Fonts -->
+    <link rel="icon" type="image/png" href="img/logo.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -23,20 +20,9 @@
             --border-color: #2A2A2A;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
-            line-height: 1.6;
-        }
-
-        /* Header / Navbar */
         header {
             background: rgba(10, 10, 10, 0.95);
             position: fixed;
@@ -50,47 +36,14 @@
             align-items: center;
         }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
-        }
+        .brand-container { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+        .header-logo { height: 38px; width: 38px; object-fit: cover; border-radius: 6px; border: 1px solid var(--primary-red); }
+        .logo-text { font-weight: 900; font-size: 1.4rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+        .logo-text span { color: var(--primary-red); }
 
-        .header-logo {
-            height: 38px;
-            width: 38px;
-            object-fit: cover;
-            border-radius: 6px;
-            border: 1px solid var(--primary-red);
-        }
+        nav a { color: var(--text-light); text-decoration: none; margin-left: 1.5rem; font-weight: 700; font-size: 0.9rem; transition: color 0.3s; }
+        nav a:hover { color: var(--primary-red); }
 
-        .logo-text {
-            font-weight: 900;
-            font-size: 1.4rem;
-            color: var(--text-light);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .logo-text span {
-            color: var(--primary-red);
-        }
-
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin-left: 1.5rem;
-            font-weight: 700;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--primary-red);
-        }
-
-        /* Hero Section (Novo Layout Lado a Lado) */
         .hero {
             padding: 8.5rem 2rem 5rem;
             background: linear-gradient(180deg, rgba(229, 9, 20, 0.12) 0%, rgba(10, 10, 10, 1) 100%);
@@ -105,49 +58,20 @@
             gap: 3rem;
         }
 
-        .hero-text {
-            flex: 1;
-            text-align: left;
-        }
+        .hero-text { flex: 1; text-align: left; }
+        .hero h1 { font-size: 3.2rem; font-weight: 900; text-transform: uppercase; line-height: 1.1; margin-bottom: 1rem; color: var(--text-light); }
+        .hero h1 span { color: var(--primary-red); }
+        .hero p { font-size: 1.2rem; color: var(--text-gray); margin-bottom: 2rem; max-width: 520px; }
 
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            line-height: 1.1;
-            margin-bottom: 1rem;
-            color: var(--text-light);
-        }
-
-        .hero h1 span {
-            color: var(--primary-red);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-gray);
-            margin-bottom: 2rem;
-            max-width: 520px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .hero-image-wrapper {
-            flex-shrink: 0;
-            position: relative;
-        }
-
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .hero-image-wrapper { flex-shrink: 0; }
         .hero-logo-card {
-            width: 260px;
-            height: 260px;
+            width: 240px;
+            height: 240px;
             object-fit: cover;
             border-radius: 16px;
             border: 2px solid var(--primary-red);
-            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35), 0 0 15px rgba(0,0,0,0.8);
+            box-shadow: 0 10px 30px rgba(229, 9, 20, 0.35);
             background-color: var(--card-bg);
             display: block;
         }
@@ -163,30 +87,11 @@
             text-transform: uppercase;
             transition: transform 0.2s, background-color 0.2s;
         }
+        .btn:hover { background-color: var(--primary-red-hover); transform: translateY(-2px); }
+        .btn-outline { background-color: transparent; border: 2px solid var(--primary-red); color: var(--text-light); }
+        .btn-outline:hover { background-color: var(--primary-red); color: #fff; }
 
-        .btn:hover {
-            background-color: var(--primary-red-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary-red);
-            color: var(--text-light);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary-red);
-            color: #fff;
-        }
-
-        /* Container & Sections */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
+        .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
         .section-title {
             text-align: center;
             font-size: 2rem;
@@ -195,7 +100,6 @@
             margin-bottom: 3rem;
             position: relative;
         }
-
         .section-title::after {
             content: '';
             display: block;
@@ -206,13 +110,7 @@
             border-radius: 2px;
         }
 
-        /* Calendário Cards */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
+        .calendar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
         .card {
             background-color: var(--card-bg);
             border-radius: 8px;
@@ -221,11 +119,7 @@
             border-top: 4px solid var(--primary-red);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-
-        .card.final {
-            border-top-color: var(--gold);
-        }
-
+        .card.final { border-top-color: var(--gold); }
         .card .badge {
             display: inline-block;
             background: var(--secondary-dark);
@@ -237,18 +131,9 @@
             margin-bottom: 1rem;
             border: 1px solid var(--border-color);
         }
+        .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+        .card p { color: var(--text-gray); font-size: 0.95rem; }
 
-        .card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .card p {
-            color: var(--text-gray);
-            font-size: 0.95rem;
-        }
-
-        /* Tabelas */
         .table-wrapper {
             overflow-x: auto;
             background-color: var(--card-bg);
@@ -256,108 +141,35 @@
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--secondary-dark); color: var(--primary-red); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
+        .pilot-link { color: var(--primary-red); text-decoration: none; font-weight: 700; display: inline-block; transition: all 0.2s ease; }
+        .pilot-link:hover { color: var(--primary-red-hover); text-decoration: underline; transform: translateX(3px); }
 
-        th, td {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
-        }
+        .rules-list { list-style: none; display: grid; gap: 1.5rem; }
+        .rules-item { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem; }
+        .rules-icon { background-color: var(--primary-red); color: #fff; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; }
 
-        th {
-            background-color: var(--secondary-dark);
-            color: var(--primary-red);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-
-        tr:nth-child(even) {
-            background-color: rgba(255,255,255,0.02);
-        }
-
-        .pilot-link {
-            color: var(--primary-red);
-            text-decoration: none;
-            font-weight: 700;
-            display: inline-block;
-            transition: all 0.2s ease;
-        }
-
-        .pilot-link:hover {
-            color: var(--primary-red-hover);
-            text-decoration: underline;
-            transform: translateX(3px);
-        }
-
-        /* Regulamento */
-        .rules-list {
-            list-style: none;
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .rules-item {
-            background-color: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-        }
-
-        .rules-icon {
-            background-color: var(--primary-red);
-            color: #fff;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            flex-shrink: 0;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: #050505;
-            color: var(--text-gray);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--border-color);
-        }
+        footer { text-align: center; padding: 2rem; background-color: #050505; color: var(--text-gray); font-size: 0.9rem; border-top: 1px solid var(--border-color); }
 
         @media (max-width: 850px) {
-            .hero-container {
-                flex-direction: column-reverse;
-                text-align: center;
-                gap: 2rem;
-            }
-            .hero-text {
-                text-align: center;
-            }
-            .hero-buttons {
-                justify-content: center;
-            }
+            .hero-container { flex-direction: column-reverse; text-align: center; gap: 2rem; }
+            .hero-text { text-align: center; }
+            .hero-buttons { justify-content: center; }
             .hero h1 { font-size: 2.2rem; }
-            .hero-logo-card { width: 190px; height: 190px; }
+            .hero-logo-card { width: 180px; height: 180px; }
             nav { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header com Logo e Nome -->
     <header>
         <a href="#" class="brand-container">
-            <img src="img/logo.jpg" alt="Logo" class="header-logo" onerror="this.src='img/logo.jpeg'">
+            <img src="img/logo.png" alt="Logo" class="header-logo" onerror="this.style.display='none'">
             <div class="logo-text">FORMULA 0 <span>BH</span></div>
         </a>
         <nav>
@@ -368,7 +180,6 @@
         </nav>
     </header>
 
-    <!-- Hero Section Reformulada -->
     <section class="hero">
         <div class="hero-container">
             <div class="hero-text">
@@ -380,12 +191,11 @@
                 </div>
             </div>
             <div class="hero-image-wrapper">
-                <img src="img/logo.jpg" alt="Logo Oficial FORMULA 0 BH" class="hero-logo-card" onerror="this.src='img/logo.jpeg'">
+                <img src="img/logo.png" alt="Logo Oficial FORMULA 0 BH" class="hero-logo-card" onerror="this.style.display='none'">
             </div>
         </div>
     </section>
 
-    <!-- Tabela de Pilotos -->
     <section id="pilotos" class="container">
         <h2 class="section-title">Pilotos</h2>
         <div class="table-wrapper">
@@ -405,7 +215,6 @@
         </div>
     </section>
 
-    <!-- Etapas -->
     <section id="etapas" class="container">
         <h2 class="section-title">Calendário Oficial</h2>
         <div class="calendar-grid">
@@ -432,7 +241,6 @@
         </div>
     </section>
 
-    <!-- Pontuação -->
     <section id="pontuacao" class="container">
         <h2 class="section-title">Sistema de Pontuação</h2>
         <div class="table-wrapper">
@@ -468,7 +276,6 @@
         </div>
     </section>
 
-    <!-- Regulamento -->
     <section id="regulamento" class="container">
         <h2 class="section-title">Regulamento Básico</h2>
         <ul class="rules-list">
@@ -522,17 +329,27 @@
         </ul>
     </section>
 
-    <!-- Footer -->
     <footer>
         <p>FORMULA 0 BH &copy; 2026 — Campeonato Amador de Kart</p>
     </footer>
 
-    <!-- Script de Integração com Google Sheets -->
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
 
+        function parseCSVLine(text) {
+            let p = '', c = false, r = [];
+            for (let i = 0; i < text.length; i++) {
+                let ch = text[i];
+                if (ch === '"') { c = !c; }
+                else if (ch === ',' && !c) { r.push(p); p = ''; }
+                else { p += ch; }
+            }
+            r.push(p);
+            return r.map(x => x.replace(/^"|"$/g, '').trim());
+        }
+
         function extrairPosicao(val) {
-            if (!val) return null;
+            if (!val || val === '-' || val.toLowerCase().includes('disputar')) return null;
             const match = val.match(/\d+/);
             return match ? parseInt(match[0], 10) : null;
         }
@@ -541,29 +358,29 @@
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
                 const data = await response.text();
-                const lines = data.trim().split('\n').map(l => l.split(','));
+                const lines = data.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
                 
-                lines.shift(); // Remove cabeçalho
+                lines.shift();
                 
-                const pilotos = lines.map(row => {
-                    const e1 = extrairPosicao(row[4]?.trim());
-                    const e2 = extrairPosicao(row[6]?.trim());
-                    const e3 = extrairPosicao(row[8]?.trim());
+                const pilotos = lines.map(line => {
+                    const row = parseCSVLine(line);
+                    const e1 = extrairPosicao(row[4]);
+                    const e2 = extrairPosicao(row[6]);
+                    const e3 = extrairPosicao(row[8]);
 
                     let vitorias = [e1, e2, e3].filter(p => p === 1).length;
                     let podios = [e1, e2, e3].filter(p => p !== null && p >= 1 && p <= 3).length;
 
                     return {
-                        id: row[0]?.trim(),
-                        nome: row[1]?.trim(),
-                        status: row[3]?.trim() || 'A disputar',
+                        id: row[0] || '',
+                        nome: row[1] || '',
+                        status: row[3] || 'A disputar',
                         vitorias: vitorias,
                         podios: podios,
                         pontos: parseFloat(row[12]) || 0
                     };
                 });
 
-                // Ordena por Pontos -> Vitórias -> Pódios -> Nome
                 pilotos.sort((a, b) => {
                     if (b.pontos !== a.pontos) return b.pontos - a.pontos;
                     if (b.vitorias !== a.vitorias) return b.vitorias - a.vitorias;
@@ -593,6 +410,5 @@
 
         carregarPilotos();
     </script>
-
 </body>
 </html>
