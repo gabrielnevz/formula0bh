@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado da Etapa | FORMULA 0 BH</title>
+    <title>1ª Etapa - Betim | FORMULA 0 BH</title>
     
     <link rel="icon" type="image/png" href="img/logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-dark: #0A0A0A;
@@ -53,7 +53,7 @@
         }
         .back-btn:hover { background-color: var(--primary-red); color: #fff; }
 
-        .container { max-width: 950px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+        .container { max-width: 1050px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
 
         .stage-header {
             background-color: var(--card-bg);
@@ -102,10 +102,45 @@
         .highlight-card.vr { border-top: 3px solid var(--badge-vr); }
 
         .highlight-label { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; font-weight: 700; }
-        .highlight-name { font-size: 1.2rem; font-weight: 900; color: var(--text-light); margin-top: 0.3rem; }
+        .highlight-name { font-size: 1.15rem; font-weight: 900; color: var(--text-light); margin-top: 0.3rem; }
+        .highlight-sub { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }
 
-        /* Tabela */
-        .section-subtitle { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
+        /* Abas de Navegação */
+        .tabs-nav {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            color: #fff;
+        }
+
+        .tab-btn:hover:not(.active) {
+            border-color: var(--primary-red);
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* Tabelas */
         .table-wrapper {
             overflow-x: auto;
             background-color: var(--card-bg);
@@ -116,12 +151,16 @@
         }
 
         table { width: 100%; border-collapse: collapse; text-align: left; }
-        th, td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        th, td { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
         th { background-color: var(--secondary-dark); color: var(--primary-red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
         tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
 
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+
         .pilot-link { color: var(--primary-red); text-decoration: none; font-weight: 700; }
         .pilot-link:hover { text-decoration: underline; }
+
+        .pilot-external { color: var(--text-gray); font-style: italic; font-size: 0.85rem; }
 
         .extra-badge {
             display: inline-flex;
@@ -135,6 +174,35 @@
         .badge-pole { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
         .badge-vr { background: rgba(155, 89, 182, 0.2); color: #9b59b6; border: 1px solid #9b59b6; }
 
+        .pdf-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pdf-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: 0.2s;
+        }
+        .pdf-btn:hover { background-color: var(--primary-red); color: #fff; }
+
         footer { text-align: center; padding: 1.5rem; background-color: #050505; color: var(--text-gray); font-size: 0.85rem; border-top: 1px solid var(--border-color); }
     </style>
 </head>
@@ -147,60 +215,131 @@
 
     <div class="container">
         <div class="stage-header">
-            <span class="stage-badge" id="etapa-badge">ETAPA</span>
-            <h1 id="etapa-titulo">Carregando Resultados...</h1>
-            <p id="etapa-subtitulo">Aguarde...</p>
+            <span class="stage-badge">ETAPA 1</span>
+            <h1>GP de Betim 2026</h1>
+            <p>📅 30 de Agosto de 2026 | 📍 Kartódromo Internacional de Betim (Traçado 1)</p>
         </div>
 
         <!-- Destaques da Corrida -->
         <div class="highlights-grid">
             <div class="highlight-card winner">
                 <div class="highlight-label">🥇 Vencedor da Etapa</div>
-                <div class="highlight-name" id="highlight-winner">-</div>
+                <div class="highlight-name" id="highlight-winner">Marcello Maia</div>
+                <div class="highlight-sub">Tempo Total: 00:20:12.822</div>
             </div>
             <div class="highlight-card pole">
                 <div class="highlight-label">⏱️ Pole Position (+1 pt)</div>
-                <div class="highlight-name" id="highlight-pole">-</div>
+                <div class="highlight-name" id="highlight-pole">Marcello Maia</div>
+                <div class="highlight-sub">Bateria Oficial 09:50</div>
             </div>
             <div class="highlight-card vr">
                 <div class="highlight-label">⚡ Volta Mais Rápida (+1 pt)</div>
-                <div class="highlight-name" id="highlight-vr">-</div>
+                <div class="highlight-name" id="highlight-vr">Marcello Maia</div>
+                <div class="highlight-sub">01:13.714 (Volta 16 - 52,24 km/h)</div>
             </div>
         </div>
 
-        <!-- Tabela Completa da Etapa -->
-        <h2 class="section-subtitle">Classificação Final da Prova</h2>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Pos.</th>
-                        <th>Piloto</th>
-                        <th>Bônus</th>
-                        <th>Pontos Conquistados</th>
-                    </tr>
-                </thead>
-                <tbody id="etapa-tbody">
-                    <tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Carregando resultados da planilha...</td></tr>
-                </tbody>
-            </table>
+        <!-- Seletor de Visualização -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('f0-tab')">🏆 Pontuação do Campeonato F0</button>
+            <button class="tab-btn" onclick="switchTab('timing-tab')">⏱️ Relatório Oficial de Cronometragem (LapTime)</button>
+        </div>
+
+        <!-- ABA 1: Classificação do Campeonato (Lê da Planilha Oficial) -->
+        <div id="f0-tab" class="tab-content active">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pos.</th>
+                            <th>Piloto</th>
+                            <th>Bônus</th>
+                            <th>Pontos Conquistados</th>
+                        </tr>
+                    </thead>
+                    <tbody id="etapa-tbody">
+                        <tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Carregando resultados da planilha oficial...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ABA 2: Relatório Completo de Cronometragem (PDF LapTime Oficial) -->
+        <div id="timing-tab" class="tab-content">
+            <div class="pdf-action-bar">
+                <div>
+                    <strong>📄 Documento Oficial de Pista</strong>
+                    <p style="color: var(--text-gray); font-size: 0.8rem;">Bateria 09:50 | 30/08/2026 10:32:43 | Sistema LapTime</p>
+                </div>
+                <a href="TimingOfficialReport.pdf" target="_blank" class="pdf-btn">📥 Abrir PDF Original</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>POS</th>
+                            <th>#</th>
+                            <th>Nome do Competidor</th>
+                            <th>MV</th>
+                            <th>TMV</th>
+                            <th>TT</th>
+                            <th>Gap</th>
+                            <th>INT</th>
+                            <th>T.U.V</th>
+                            <th>TV</th>
+                            <th>V.Med</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>1º</strong></td><td class="mono">60</td><td>Gabriel Cardoso <span class="pilot-external">(Conv.)</span></td><td class="mono">5</td><td class="mono">01:14.059</td><td class="mono">00:20:06.498</td><td class="mono">-</td><td class="mono">-</td><td class="mono">01:15.585</td><td class="mono">16</td><td class="mono">52,52 km/h</td></tr>
+                        <tr style="background: rgba(229, 9, 20, 0.08);"><td><strong>2º</strong></td><td class="mono">25</td><td><strong>Marcello Maia</strong> <span class="extra-badge badge-vr">⚡ VR</span></td><td class="mono">16</td><td class="mono" style="color: var(--badge-vr); font-weight: 700;">01:13.714</td><td class="mono">00:20:12.822</td><td class="mono">+00:06.324</td><td class="mono">+00:06.324</td><td class="mono">01:13.714</td><td class="mono">16</td><td class="mono">52,24 km/h</td></tr>
+                        <tr><td><strong>3º</strong></td><td class="mono">46</td><td>Rodrigo Oliveira <span class="pilot-external">(Conv.)</span></td><td class="mono">11</td><td class="mono">01:14.751</td><td class="mono">00:20:21.233</td><td class="mono">+00:14.735</td><td class="mono">+00:08.411</td><td class="mono">01:15.482</td><td class="mono">16</td><td class="mono">51,88 km/h</td></tr>
+                        <tr><td><strong>4º</strong></td><td class="mono">65</td><td><strong>Davi Oliveira Costa</strong></td><td class="mono">11</td><td class="mono">01:15.228</td><td class="mono">00:20:22.625</td><td class="mono">+00:16.127</td><td class="mono">+00:01.392</td><td class="mono">01:16.017</td><td class="mono">16</td><td class="mono">51,82 km/h</td></tr>
+                        <tr><td><strong>5º</strong></td><td class="mono">5</td><td><strong>Gabriel Neves Costa</strong></td><td class="mono">7</td><td class="mono">01:15.358</td><td class="mono">00:20:32.889</td><td class="mono">+00:26.391</td><td class="mono">+00:10.264</td><td class="mono">01:16.974</td><td class="mono">16</td><td class="mono">51,39 km/h</td></tr>
+                        <tr><td><strong>6º</strong></td><td class="mono">16</td><td><strong>Vitor Genelhu</strong></td><td class="mono">4</td><td class="mono">01:15.286</td><td class="mono">00:20:32.911</td><td class="mono">+00:26.413</td><td class="mono">+00:00.022</td><td class="mono">01:16.986</td><td class="mono">16</td><td class="mono">51,39 km/h</td></tr>
+                        <tr><td><strong>7º</strong></td><td class="mono">26</td><td><strong>João Victor Rezende Silva</strong></td><td class="mono">5</td><td class="mono">01:15.472</td><td class="mono">00:20:32.949</td><td class="mono">+00:26.451</td><td class="mono">+00:00.038</td><td class="mono">01:16.607</td><td class="mono">16</td><td class="mono">51,39 km/h</td></tr>
+                        <tr><td><strong>8º</strong></td><td class="mono">1</td><td><strong>Felipe Alves Fernandes</strong></td><td class="mono">8</td><td class="mono">01:16.517</td><td class="mono">00:20:48.517</td><td class="mono">+00:42.019</td><td class="mono">+00:15.568</td><td class="mono">01:17.723</td><td class="mono">16</td><td class="mono">50,75 km/h</td></tr>
+                        <tr><td><strong>9º</strong></td><td class="mono">35</td><td>Guilherme Rezende Costa <span class="pilot-external">(Conv.)</span></td><td class="mono">5</td><td class="mono">01:17.469</td><td class="mono">00:21:06.216</td><td class="mono">+00:59.718</td><td class="mono">+00:17.699</td><td class="mono">01:20.113</td><td class="mono">16</td><td class="mono">50,04 km/h</td></tr>
+                        <tr><td><strong>10º</strong></td><td class="mono">51</td><td><strong>Artur Santiago Anastácio</strong></td><td class="mono">13</td><td class="mono">01:16.948</td><td class="mono">00:21:06.826</td><td class="mono">+01:00.328</td><td class="mono">+00:00.610</td><td class="mono">01:20.641</td><td class="mono">16</td><td class="mono">50,02 km/h</td></tr>
+                        <tr><td><strong>11º</strong></td><td class="mono">38</td><td>Tiago Matheus Da Rocha <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">01:16.674</td><td class="mono">00:21:06.888</td><td class="mono">+01:00.390</td><td class="mono">+00:00.062</td><td class="mono">01:19.727</td><td class="mono">16</td><td class="mono">50,01 km/h</td></tr>
+                        <tr><td><strong>12º</strong></td><td class="mono">40</td><td><strong>Luca Andrade Guimarães Brito</strong></td><td class="mono">7</td><td class="mono">01:16.956</td><td class="mono">00:21:07.055</td><td class="mono">+01:00.557</td><td class="mono">+00:00.167</td><td class="mono">01:21.554</td><td class="mono">16</td><td class="mono">50,01 km/h</td></tr>
+                        <tr><td><strong>13º</strong></td><td class="mono">59</td><td><strong>Gabriel Lemos</strong></td><td class="mono">4</td><td class="mono">01:18.054</td><td class="mono">00:21:21.382</td><td class="mono">+01:14.884</td><td class="mono">+00:14.327</td><td class="mono">01:19.625</td><td class="mono">16</td><td class="mono">49,45 km/h</td></tr>
+                        <tr><td><strong>14º</strong></td><td class="mono">12</td><td>Matheus Araújo Diniz <span class="pilot-external">(Conv.)</span></td><td class="mono">13</td><td class="mono">01:16.690</td><td class="mono">00:20:05.635</td><td class="mono">-1 volta</td><td class="mono">-1 volta</td><td class="mono">01:17.261</td><td class="mono">15</td><td class="mono">49,27 km/h</td></tr>
+                        <tr><td><strong>15º</strong></td><td class="mono">43</td><td>Arthur Martins Da Silva <span class="pilot-external">(Conv.)</span></td><td class="mono">12</td><td class="mono">01:18.041</td><td class="mono">00:20:08.217</td><td class="mono">-1 volta</td><td class="mono">+00:02.582</td><td class="mono">01:18.513</td><td class="mono">15</td><td class="mono">49,16 km/h</td></tr>
+                        <tr><td><strong>16º</strong></td><td class="mono">68</td><td><strong>Arthur Oliveira Magalhães</strong></td><td class="mono">8</td><td class="mono">01:18.688</td><td class="mono">00:20:20.532</td><td class="mono">-1 volta</td><td class="mono">+00:12.315</td><td class="mono">01:20.102</td><td class="mono">15</td><td class="mono">48,67 km/h</td></tr>
+                        <tr><td><strong>17º</strong></td><td class="mono">81</td><td><strong>Henrique Malvar Rios</strong></td><td class="mono">13</td><td class="mono">01:18.977</td><td class="mono">00:20:20.835</td><td class="mono">-1 volta</td><td class="mono">+00:00.303</td><td class="mono">01:20.255</td><td class="mono">15</td><td class="mono">48,66 km/h</td></tr>
+                        <tr><td><strong>18º</strong></td><td class="mono">10</td><td>Andre Sigismondi Genelhu <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">01:18.501</td><td class="mono">00:20:21.239</td><td class="mono">-1 volta</td><td class="mono">+00:00.404</td><td class="mono">01:20.179</td><td class="mono">15</td><td class="mono">48,64 km/h</td></tr>
+                        <tr><td><strong>19º</strong></td><td class="mono">20</td><td>Fabio Oliveira Cardoso <span class="pilot-external">(Conv.)</span></td><td class="mono">4</td><td class="mono">01:19.359</td><td class="mono">00:20:22.646</td><td class="mono">-1 volta</td><td class="mono">+00:01.407</td><td class="mono">01:20.701</td><td class="mono">15</td><td class="mono">48,58 km/h</td></tr>
+                        <tr><td><strong>20º</strong></td><td class="mono">39</td><td><strong>Gabriel Silva Tavares</strong></td><td class="mono">4</td><td class="mono">01:18.150</td><td class="mono">00:20:28.879</td><td class="mono">-1 volta</td><td class="mono">+00:06.233</td><td class="mono">01:18.810</td><td class="mono">15</td><td class="mono">48,34 km/h</td></tr>
+                        <tr><td><strong>21º</strong></td><td class="mono">27</td><td><strong>Ednilson Clemente Cury Monteiro</strong></td><td class="mono">10</td><td class="mono">01:14.963</td><td class="mono">00:20:33.838</td><td class="mono">-1 volta</td><td class="mono">+00:04.959</td><td class="mono">01:16.049</td><td class="mono">15</td><td class="mono">48,14 km/h</td></tr>
+                        <tr><td><strong>22º</strong></td><td class="mono">75</td><td><strong>Edson Clemente Cury Monteiro</strong></td><td class="mono">10</td><td class="mono">01:19.004</td><td class="mono">00:20:37.424</td><td class="mono">-1 volta</td><td class="mono">+00:03.586</td><td class="mono">01:20.138</td><td class="mono">15</td><td class="mono">48,00 km/h</td></tr>
+                        <tr><td><strong>23º</strong></td><td class="mono">7</td><td>Fabiano Da Silva Dias <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">01:18.063</td><td class="mono">00:20:44.761</td><td class="mono">-1 volta</td><td class="mono">+00:07.337</td><td class="mono">01:19.790</td><td class="mono">15</td><td class="mono">47,72 km/h</td></tr>
+                        <tr><td><strong>24º</strong></td><td class="mono">19</td><td>Keliane Martins Cardoso <span class="pilot-external">(Conv.)</span></td><td class="mono">13</td><td class="mono">01:22.756</td><td class="mono">00:21:22.788</td><td class="mono">-1 volta</td><td class="mono">+00:38.027</td><td class="mono">01:25.426</td><td class="mono">15</td><td class="mono">46,31 km/h</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <footer>
-        <p>FORMULA 0 BH &copy; 2026 — Resultado Oficial da Etapa</p>
+        <p>FORMULA 0 BH &copy; 2026 — 1ª Etapa Betim</p>
     </footer>
 
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
-        const params = new URLSearchParams(window.location.search);
-        const etapaNum = parseInt(params.get('num') || '1', 10);
 
-        const infoEtapas = {
-            1: { titulo: "1ª Etapa - Betim", data: "30 de Agosto de 2026", local: "Kartódromo Internacional de Betim (09h50)", colPos: 4, colPts: 5 },
-            2: { titulo: "2ª Etapa - Vespasiano", data: "01 de Novembro de 2026", local: "Kartódromo de Vespasiano", colPos: 6, colPts: 7 },
-            3: { titulo: "3ª Etapa - Grande Final", data: "06 de Dezembro de 2026", local: "A Definir (Pontuação 1.5x)", colPos: 8, colPts: 9 }
-        };
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tabId === 'f0-tab') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+        }
 
         function parseCSVLine(text) {
             let p = '', c = false, r = [];
@@ -221,12 +360,6 @@
         }
 
         async function carregarResultadoEtapa() {
-            const etapaConfig = infoEtapas[etapaNum] || infoEtapas[1];
-            document.title = `Resultado | ${etapaConfig.titulo} - FORMULA 0 BH`;
-            document.getElementById('etapa-badge').innerText = `ETAPA ${etapaNum}`;
-            document.getElementById('etapa-titulo').innerText = etapaConfig.titulo;
-            document.getElementById('etapa-subtitulo').innerText = `📅 ${etapaConfig.data} | 📍 ${etapaConfig.local}`;
-
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
                 const data = await response.text();
@@ -240,8 +373,8 @@
 
                 lines.forEach(line => {
                     const row = parseCSVLine(line);
-                    const posRaw = row[etapaConfig.colPos] || '-';
-                    const ptsRaw = parseFloat(row[etapaConfig.colPts]) || 0;
+                    const posRaw = row[4] || '-';
+                    const ptsRaw = parseFloat(row[5]) || 0;
                     const posNum = extrairPosicao(posRaw);
                     const isDNS = posRaw.toUpperCase().includes('DNS');
                     const isPole = posRaw.toUpperCase().includes('POLE');
@@ -267,9 +400,9 @@
                     }
                 });
 
-                document.getElementById('highlight-winner').innerText = raceWinner;
-                document.getElementById('highlight-pole').innerText = poleWinner;
-                document.getElementById('highlight-vr').innerText = vrWinner;
+                if (raceWinner !== '-') document.getElementById('highlight-winner').innerText = raceWinner;
+                if (poleWinner !== '-') document.getElementById('highlight-pole').innerText = poleWinner;
+                if (vrWinner !== '-') document.getElementById('highlight-vr').innerText = vrWinner;
 
                 resultados.sort((a, b) => a.posNum - b.posNum);
 
