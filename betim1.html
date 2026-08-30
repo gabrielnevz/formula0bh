@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado da Etapa | FORMULA 0 BH</title>
+    
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+            --primary-red: #E50914;
+            --primary-red-hover: #ff2a36;
+            --secondary-dark: #1F1F1F;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --text-light: #F5F5F5;
+            --text-gray: #A0A0A0;
+            --border-color: #2A2A2A;
+            --badge-pole: #3498db;
+            --badge-vr: #9b59b6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid var(--primary-red);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: 900; font-size: 1.3rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; text-decoration: none; }
+        .logo span { color: var(--primary-red); }
+
+        .back-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--text-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .back-btn:hover { background-color: var(--primary-red); color: #fff; }
+
+        .container { max-width: 950px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+
+        .stage-header {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .stage-badge {
+            display: inline-block;
+            background: var(--secondary-dark);
+            color: var(--primary-red);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .stage-header h1 { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; }
+        .stage-header p { color: var(--text-gray); font-size: 1rem; margin-top: 0.3rem; }
+
+        /* Destaques (Vencedor, Pole, VR) */
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .highlight-card.winner { border-top: 3px solid var(--gold); }
+        .highlight-card.pole { border-top: 3px solid var(--badge-pole); }
+        .highlight-card.vr { border-top: 3px solid var(--badge-vr); }
+
+        .highlight-label { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; font-weight: 700; }
+        .highlight-name { font-size: 1.2rem; font-weight: 900; color: var(--text-light); margin-top: 0.3rem; }
+
+        /* Tabela */
+        .section-subtitle { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
+        .table-wrapper {
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 1rem 1.2rem; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        th { background-color: var(--secondary-dark); color: var(--primary-red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
+
+        .pilot-link { color: var(--primary-red); text-decoration: none; font-weight: 700; }
+        .pilot-link:hover { text-decoration: underline; }
+
+        .extra-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 3px;
+            margin-left: 0.3rem;
+        }
+        .badge-pole { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
+        .badge-vr { background: rgba(155, 89, 182, 0.2); color: #9b59b6; border: 1px solid #9b59b6; }
+
+        footer { text-align: center; padding: 1.5rem; background-color: #050505; color: var(--text-gray); font-size: 0.85rem; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">FORMULA 0 <span>BH</span></a>
+        <a href="index.html" class="back-btn">← Voltar à Home</a>
+    </header>
+
+    <div class="container">
+        <div class="stage-header">
+            <span class="stage-badge" id="etapa-badge">ETAPA</span>
+            <h1 id="etapa-titulo">Carregando Resultados...</h1>
+            <p id="etapa-subtitulo">Aguarde...</p>
+        </div>
+
+        <!-- Destaques da Corrida -->
+        <div class="highlights-grid">
+            <div class="highlight-card winner">
+                <div class="highlight-label">🥇 Vencedor da Etapa</div>
+                <div class="highlight-name" id="highlight-winner">-</div>
+            </div>
+            <div class="highlight-card pole">
+                <div class="highlight-label">⏱️ Pole Position (+1 pt)</div>
+                <div class="highlight-name" id="highlight-pole">-</div>
+            </div>
+            <div class="highlight-card vr">
+                <div class="highlight-label">⚡ Volta Mais Rápida (+1 pt)</div>
+                <div class="highlight-name" id="highlight-vr">-</div>
+            </div>
+        </div>
+
+        <!-- Tabela Completa da Etapa -->
+        <h2 class="section-subtitle">Classificação Final da Prova</h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Pos.</th>
+                        <th>Piloto</th>
+                        <th>Bônus</th>
+                        <th>Pontos Conquistados</th>
+                    </tr>
+                </thead>
+                <tbody id="etapa-tbody">
+                    <tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Carregando resultados da planilha...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <p>FORMULA 0 BH &copy; 2026 — Resultado Oficial da Etapa</p>
+    </footer>
+
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
+        const params = new URLSearchParams(window.location.search);
+        const etapaNum = parseInt(params.get('num') || '1', 10);
+
+        const infoEtapas = {
+            1: { titulo: "1ª Etapa - Betim", data: "30 de Agosto de 2026", local: "Kartódromo Internacional de Betim (09h50)", colPos: 4, colPts: 5 },
+            2: { titulo: "2ª Etapa - Vespasiano", data: "01 de Novembro de 2026", local: "Kartódromo de Vespasiano", colPos: 6, colPts: 7 },
+            3: { titulo: "3ª Etapa - Grande Final", data: "06 de Dezembro de 2026", local: "A Definir (Pontuação 1.5x)", colPos: 8, colPts: 9 }
+        };
+
+        function parseCSVLine(text) {
+            let p = '', c = false, r = [];
+            for (let i = 0; i < text.length; i++) {
+                let ch = text[i];
+                if (ch === '"') { c = !c; }
+                else if (ch === ',' && !c) { r.push(p); p = ''; }
+                else { p += ch; }
+            }
+            r.push(p);
+            return r.map(x => x.replace(/^"|"$/g, '').trim());
+        }
+
+        function extrairPosicao(val) {
+            if (!val || val === '-' || val.toLowerCase().includes('disputar')) return null;
+            const match = val.match(/\d+/);
+            return match ? parseInt(match[0], 10) : null;
+        }
+
+        async function carregarResultadoEtapa() {
+            const etapaConfig = infoEtapas[etapaNum] || infoEtapas[1];
+            document.title = `Resultado | ${etapaConfig.titulo} - FORMULA 0 BH`;
+            document.getElementById('etapa-badge').innerText = `ETAPA ${etapaNum}`;
+            document.getElementById('etapa-titulo').innerText = etapaConfig.titulo;
+            document.getElementById('etapa-subtitulo').innerText = `📅 ${etapaConfig.data} | 📍 ${etapaConfig.local}`;
+
+            try {
+                const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
+                const data = await response.text();
+                const lines = data.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
+                lines.shift();
+
+                const resultados = [];
+                let poleWinner = '-';
+                let vrWinner = '-';
+                let raceWinner = '-';
+
+                lines.forEach(line => {
+                    const row = parseCSVLine(line);
+                    const posRaw = row[etapaConfig.colPos] || '-';
+                    const ptsRaw = parseFloat(row[etapaConfig.colPts]) || 0;
+                    const posNum = extrairPosicao(posRaw);
+                    const isDNS = posRaw.toUpperCase().includes('DNS');
+                    const isPole = posRaw.toUpperCase().includes('POLE');
+                    const isVR = posRaw.toUpperCase().includes('VR');
+                    const nome = row[1] || '';
+                    const id = row[0] || '';
+
+                    if (isPole) poleWinner = nome;
+                    if (isVR) vrWinner = nome;
+                    if (posNum === 1) raceWinner = nome;
+
+                    if (posNum !== null || isDNS) {
+                        resultados.push({
+                            id: id,
+                            nome: nome,
+                            posNum: posNum !== null ? posNum : 999,
+                            posRaw: posRaw,
+                            pts: ptsRaw,
+                            isDNS: isDNS,
+                            isPole: isPole,
+                            isVR: isVR
+                        });
+                    }
+                });
+
+                document.getElementById('highlight-winner').innerText = raceWinner;
+                document.getElementById('highlight-pole').innerText = poleWinner;
+                document.getElementById('highlight-vr').innerText = vrWinner;
+
+                resultados.sort((a, b) => a.posNum - b.posNum);
+
+                const tbody = document.getElementById('etapa-tbody');
+                tbody.innerHTML = '';
+
+                if (resultados.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Resultados ainda não computados para esta etapa.</td></tr>';
+                    return;
+                }
+
+                resultados.forEach((r) => {
+                    let posExibicao = `${r.posNum}º`;
+                    if (r.isDNS) posExibicao = '<span style="color: var(--primary-red); font-weight: 700;">DNS</span>';
+                    else if (r.posNum === 1) posExibicao = '🥇 1º';
+                    else if (r.posNum === 2) posExibicao = '🥈 2º';
+                    else if (r.posNum === 3) posExibicao = '🥉 3º';
+
+                    let badges = '';
+                    if (r.isPole) badges += '<span class="extra-badge badge-pole">⏱️ Pole (+1)</span>';
+                    if (r.isVR) badges += '<span class="extra-badge badge-vr">⚡ VR (+1)</span>';
+                    if (!badges) badges = '<span style="color: var(--text-gray);">-</span>';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${posExibicao}</strong></td>
+                        <td><a href="perfil.html?id=${encodeURIComponent(r.id)}" class="pilot-link">${r.nome}</a></td>
+                        <td>${badges}</td>
+                        <td><strong>${r.pts} pts</strong></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+                document.getElementById('etapa-tbody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: red;">Erro ao carregar os dados da etapa.</td></tr>';
+            }
+        }
+
+        carregarResultadoEtapa();
+    </script>
+</body>
+</html>
