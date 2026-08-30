@@ -20,6 +20,8 @@
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
             --border-color: #2A2A2A;
+            --badge-pole: #3498db;
+            --badge-vr: #9b59b6;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
@@ -43,11 +45,7 @@
         .logo-text { font-weight: 900; font-size: 1.4rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
         .logo-text span { color: var(--primary-red); }
 
-        nav {
-            display: flex;
-            align-items: center;
-        }
-
+        nav { display: flex; align-items: center; }
         nav a { color: var(--text-light); text-decoration: none; margin-left: 1.5rem; font-weight: 700; font-size: 0.9rem; transition: color 0.3s; }
         nav a:hover { color: var(--primary-red); }
 
@@ -104,6 +102,22 @@
         }
         .btn:hover { background-color: var(--primary-red-hover); transform: translateY(-2px); }
 
+        .btn-card {
+            display: inline-block;
+            background-color: var(--primary-red);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-align: center;
+            width: 100%;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-card:hover { background-color: var(--primary-red-hover); transform: translateY(-2px); }
+
         .btn-insta {
             display: inline-flex;
             align-items: center;
@@ -117,10 +131,7 @@
             text-transform: uppercase;
             transition: transform 0.2s, filter 0.2s;
         }
-        .btn-insta:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.1);
-        }
+        .btn-insta:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
         .container { max-width: 1100px; margin: 0 auto; padding: 4rem 2rem; }
         .section-title {
@@ -149,6 +160,9 @@
             border: 1px solid var(--border-color);
             border-top: 4px solid var(--primary-red);
             box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
         .card.final { border-top-color: var(--gold); }
         .card .badge {
@@ -161,6 +175,7 @@
             font-weight: 700;
             margin-bottom: 1rem;
             border: 1px solid var(--border-color);
+            width: fit-content;
         }
         .card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
         .card p { color: var(--text-gray); font-size: 0.95rem; }
@@ -192,6 +207,19 @@
         .status-vice { background: rgba(192, 192, 192, 0.15); color: var(--silver); border: 1px solid var(--silver); }
         .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
         .status-default { color: var(--text-gray); }
+
+        .bonus-pill {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.1rem 0.35rem;
+            border-radius: 3px;
+            margin-left: 0.3rem;
+            vertical-align: middle;
+        }
+        .bonus-pole { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
+        .bonus-vr { background: rgba(155, 89, 182, 0.2); color: #9b59b6; border: 1px solid #9b59b6; }
 
         .rules-list { list-style: none; display: grid; gap: 1.5rem; }
         .rules-item { background-color: var(--card-bg); padding: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); display: flex; align-items: flex-start; gap: 1rem; }
@@ -265,25 +293,37 @@
     <section id="etapas" class="container">
         <h2 class="section-title">Calendário Oficial</h2>
         <div class="calendar-grid">
+            <!-- ETAPA 1 apontando para betim1.html -->
             <div class="card">
-                <span class="badge">ETAPA 1</span>
-                <h3>30 de Agosto</h3>
-                <p>📍 <strong>Local:</strong> Betim</p>
-                <p>🕒 <strong>Largada:</strong> 09h50</p>
-                <p style="margin-top: 0.5rem;">Abertura do campeonato no Kartódromo Internacional de Betim. Pontuação regular de F1.</p>
+                <div>
+                    <span class="badge">ETAPA 1</span>
+                    <h3>30 de Agosto</h3>
+                    <p>📍 <strong>Local:</strong> Betim</p>
+                    <p>🕒 <strong>Largada:</strong> 09h50</p>
+                    <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">Abertura do campeonato no Kartódromo Internacional de Betim. Pontuação regular de F1.</p>
+                </div>
+                <a href="betim1.html" class="btn-card">🏆 Ver Resultados</a>
             </div>
+
+            <!-- ETAPA 2 -->
             <div class="card">
-                <span class="badge">ETAPA 2</span>
-                <h3>01 de Novembro</h3>
-                <p>📍 <strong>Local:</strong> Vespasiano</p>
-                <p>🕒 <strong>Horário:</strong> A definir</p>
-                <p style="margin-top: 0.5rem;">Segunda etapa da temporada no tradicional traçado de Vespasiano.</p>
+                <div>
+                    <span class="badge">ETAPA 2</span>
+                    <h3>01 de Novembro</h3>
+                    <p>📍 <strong>Local:</strong> Vespasiano</p>
+                    <p>🕒 <strong>Horário:</strong> A definir</p>
+                    <p style="margin-top: 0.5rem;">Segunda etapa da temporada no tradicional traçado de Vespasiano.</p>
+                </div>
             </div>
+
+            <!-- ETAPA 3 -->
             <div class="card final">
-                <span class="badge" style="background-color: var(--gold); color: #000;">GRANDE FINAL (1.5x)</span>
-                <h3>06 de Dezembro</h3>
-                <p>📍 <strong>Local:</strong> A Definir</p>
-                <p style="margin-top: 0.5rem;">A grande decisão! Todos os pontos da corrida e bônus valem <strong>50% a mais (1,5x)</strong>.</p>
+                <div>
+                    <span class="badge" style="background-color: var(--gold); color: #000;">GRANDE FINAL (1.5x)</span>
+                    <h3>06 de Dezembro</h3>
+                    <p>📍 <strong>Local:</strong> A Definir</p>
+                    <p style="margin-top: 0.5rem;">A grande decisão! Todos os pontos da corrida e bônus valem <strong>50% a mais (1,5x)</strong>.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -423,6 +463,10 @@
                     let vitorias = [e1, e2, e3].filter(p => p === 1).length;
                     let podios = [e1, e2, e3].filter(p => p !== null && p >= 1 && p <= 3).length;
 
+                    const etapasTexto = [e1_raw, e2_raw, e3_raw];
+                    const poles = etapasTexto.filter(t => t.includes('POLE')).length;
+                    const vrs = etapasTexto.filter(t => t.includes('VR')).length;
+
                     let ultimaEtapa = '';
                     if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw;
                     else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw;
@@ -433,6 +477,8 @@
                         nome: row[1] || '',
                         vitorias: vitorias,
                         podios: podios,
+                        poles: poles,
+                        vrs: vrs,
                         pontos: parseFloat(row[12]) || 0,
                         ultimaEtapa: ultimaEtapa
                     };
@@ -466,11 +512,15 @@
                         }
                     }
 
+                    let bonusIcons = '';
+                    if (p.poles > 0) bonusIcons += `<span class="bonus-pill bonus-pole" title="${p.poles} Pole(s)">⏱️ ${p.poles}</span>`;
+                    if (p.vrs > 0) bonusIcons += `<span class="bonus-pill bonus-vr" title="${p.vrs} Volta(s) Mais Rápida(s)">⚡ ${p.vrs}</span>`;
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td>${idx + 1}º</td>
                         <td><a href="perfil.html?id=${encodeURIComponent(p.id)}" class="pilot-link">${p.nome}</a></td>
-                        <td>${p.pontos} pts</td>
+                        <td><strong>${p.pontos} pts</strong> ${bonusIcons}</td>
                         <td>${statusHtml}</td>
                     `;
                     tbody.appendChild(tr);
