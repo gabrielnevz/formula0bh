@@ -16,9 +16,12 @@
             --secondary-dark: #1F1F1F;
             --gold: #FFD700;
             --silver: #C0C0C0;
+            --bronze: #CD7F32;
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
             --border-color: #2A2A2A;
+            --badge-pole: #3498db;
+            --badge-vr: #9b59b6;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
@@ -50,7 +53,7 @@
         }
         .back-btn:hover { background-color: var(--primary-red); color: #fff; }
 
-        .container { max-width: 900px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+        .container { max-width: 950px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
 
         .profile-card {
             background-color: var(--card-bg);
@@ -79,7 +82,6 @@
         }
 
         .profile-pic { width: 100%; height: 100%; object-fit: cover; }
-        
         .profile-info h1 { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; line-height: 1.2; }
         
         .info-badges {
@@ -100,6 +102,7 @@
         }
         .status-lider { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
         .status-vice { background: rgba(192, 192, 192, 0.15); color: var(--silver); border: 1px solid var(--silver); }
+        .status-terceiro { background: rgba(205, 127, 50, 0.15); color: var(--bronze); border: 1px solid var(--bronze); }
         .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
         .status-disputar { background: var(--secondary-dark); color: var(--text-gray); border: 1px solid var(--border-color); }
 
@@ -115,10 +118,21 @@
             border: 1px solid var(--border-color);
         }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .stat-box { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 1.2rem; text-align: center; }
+        .stats-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+            gap: 1rem; 
+            margin-bottom: 2rem; 
+        }
+        .stat-box { 
+            background-color: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 6px; 
+            padding: 1.2rem; 
+            text-align: center; 
+        }
         .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--primary-red); }
-        .stat-label { font-size: 0.75rem; color: var(--text-gray); text-transform: uppercase; font-weight: 700; margin-top: 0.2rem; }
+        .stat-label { font-size: 0.72rem; color: var(--text-gray); text-transform: uppercase; font-weight: 700; margin-top: 0.2rem; }
 
         .section-subtitle { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 1rem; }
         .table-wrapper {
@@ -133,6 +147,19 @@
         table { width: 100%; border-collapse: collapse; text-align: left; }
         th, td { padding: 1rem; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
         th { background-color: var(--secondary-dark); color: var(--primary-red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+
+        .extra-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 3px;
+            margin-left: 0.4rem;
+        }
+        .badge-pole { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
+        .badge-vr { background: rgba(155, 89, 182, 0.2); color: #9b59b6; border: 1px solid #9b59b6; }
 
         footer { text-align: center; padding: 1.5rem; background-color: #050505; color: var(--text-gray); font-size: 0.85rem; border-top: 1px solid var(--border-color); }
 
@@ -181,6 +208,14 @@
                 <div class="stat-value" id="piloto-podios">0</div>
                 <div class="stat-label">Pódios</div>
             </div>
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-poles">0</div>
+                <div class="stat-label">⏱️ Poles</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value" id="piloto-vr">0</div>
+                <div class="stat-label">⚡ Voltas Rápidas</div>
+            </div>
         </div>
 
         <h2 class="section-subtitle">Histórico de Etapas</h2>
@@ -192,7 +227,7 @@
                         <th>Data</th>
                         <th>Kartódromo</th>
                         <th>Posição</th>
-                        <th>Pontos</th>
+                        <th>Pontos Conquistados</th>
                     </tr>
                 </thead>
                 <tbody id="piloto-historico">
@@ -260,6 +295,22 @@
             return idade;
         }
 
+        function formatarHistoricoEtapa(posRaw, ptsRaw) {
+            if (!posRaw || posRaw === '-') return { pos: '-', pts: '0 pts' };
+            
+            const upper = posRaw.toUpperCase();
+            let badges = '';
+            if (upper.includes('POLE')) badges += '<span class="extra-badge badge-pole">⏱️ Pole (+1)</span>';
+            if (upper.includes('VR')) badges += '<span class="extra-badge badge-vr">⚡ VR (+1)</span>';
+
+            const num = extrairPosicao(posRaw);
+            const posTexto = num ? `${num}º Lugar` : posRaw;
+            return {
+                pos: `${posTexto} ${badges}`,
+                pts: `${ptsRaw || 0} pts`
+            };
+        }
+
         async function carregarPerfil() {
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
@@ -271,35 +322,41 @@
                 const pilotos = lines.map(line => {
                     const row = parseCSVLine(line);
 
-                    const e1_raw = (row[4] || '').toUpperCase();
-                    const e2_raw = (row[6] || '').toUpperCase();
-                    const e3_raw = (row[8] || '').toUpperCase();
+                    const e1_raw = row[4] || '';
+                    const e2_raw = row[6] || '';
+                    const e3_raw = row[8] || '';
 
-                    const e1_num = extrairPosicao(row[4]);
-                    const e2_num = extrairPosicao(row[6]);
-                    const e3_num = extrairPosicao(row[8]);
+                    const e1_num = extrairPosicao(e1_raw);
+                    const e2_num = extrairPosicao(e2_raw);
+                    const e3_num = extrairPosicao(e3_raw);
 
                     const etapasConcluidas = [e1_num, e2_num, e3_num];
                     const vitoriasCalculadas = etapasConcluidas.filter(p => p === 1).length;
                     const podiosCalculados = etapasConcluidas.filter(p => p !== null && p >= 1 && p <= 3).length;
 
+                    const etapasTexto = [e1_raw.toUpperCase(), e2_raw.toUpperCase(), e3_raw.toUpperCase()];
+                    const poles = etapasTexto.filter(t => t.includes('POLE')).length;
+                    const vrs = etapasTexto.filter(t => t.includes('VR')).length;
+
                     let ultimaEtapa = '';
-                    if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw;
-                    else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw;
-                    else if (row[4] && row[4] !== '-') ultimaEtapa = e1_raw;
+                    if (row[8] && row[8] !== '-') ultimaEtapa = e3_raw.toUpperCase();
+                    else if (row[6] && row[6] !== '-') ultimaEtapa = e2_raw.toUpperCase();
+                    else if (row[4] && row[4] !== '-') ultimaEtapa = e1_raw.toUpperCase();
 
                     return {
                         id: row[0] || '',
                         nome: row[1] || '',
                         foto: row[2] || '',
-                        e1_pos: row[4] || '-',
+                        e1_pos: e1_raw,
                         e1_pts: row[5] || '0',
-                        e2_pos: row[6] || '-',
+                        e2_pos: e2_raw,
                         e2_pts: row[7] || '0',
-                        e3_pos: row[8] || '-',
+                        e3_pos: e3_raw,
                         e3_pts: row[9] || '0',
                         vitorias: vitoriasCalculadas,
                         podios: podiosCalculados,
+                        poles: poles,
+                        vr: vrs,
                         pontos: parseFloat(row[12]) || 0,
                         ultimaEtapa: ultimaEtapa
                     };
@@ -340,6 +397,9 @@
                     } else if (indexGeral === 1 && piloto.pontos > 0) {
                         statusBadge.className = 'status-badge status-vice';
                         statusBadge.innerText = '🥈 Vice-Líder';
+                    } else if (indexGeral === 2 && piloto.pontos > 0) {
+                        statusBadge.className = 'status-badge status-terceiro';
+                        statusBadge.innerText = '🥉 3º Lugar';
                     } else {
                         statusBadge.style.display = 'none';
                     }
@@ -362,6 +422,12 @@
                 document.getElementById('piloto-posicao').innerText = `${indexGeral + 1}º`;
                 document.getElementById('piloto-vitorias').innerText = piloto.vitorias;
                 document.getElementById('piloto-podios').innerText = piloto.podios;
+                document.getElementById('piloto-poles').innerText = piloto.poles;
+                document.getElementById('piloto-vr').innerText = piloto.vr;
+
+                const h1 = formatarHistoricoEtapa(piloto.e1_pos, piloto.e1_pts);
+                const h2 = formatarHistoricoEtapa(piloto.e2_pos, piloto.e2_pts);
+                const h3 = formatarHistoricoEtapa(piloto.e3_pos, piloto.e3_pts);
 
                 const historicoTbody = document.getElementById('piloto-historico');
                 historicoTbody.innerHTML = `
@@ -369,22 +435,22 @@
                         <td>1ª Etapa</td>
                         <td>30/08/2026</td>
                         <td>Betim (09h50)</td>
-                        <td>${piloto.e1_pos}</td>
-                        <td>${piloto.e1_pts} pts</td>
+                        <td>${h1.pos}</td>
+                        <td><strong>${h1.pts}</strong></td>
                     </tr>
                     <tr>
                         <td>2ª Etapa</td>
                         <td>01/11/2026</td>
                         <td>Vespasiano</td>
-                        <td>${piloto.e2_pos}</td>
-                        <td>${piloto.e2_pts} pts</td>
+                        <td>${h2.pos}</td>
+                        <td><strong>${h2.pts}</strong></td>
                     </tr>
                     <tr>
                         <td>3ª Etapa (Final)</td>
                         <td>06/12/2026</td>
                         <td>A Definir</td>
-                        <td>${piloto.e3_pos}</td>
-                        <td>${piloto.e3_pts} pts</td>
+                        <td>${h3.pos}</td>
+                        <td><strong>${h3.pts}</strong></td>
                     </tr>
                 `;
 

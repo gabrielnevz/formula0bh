@@ -16,6 +16,7 @@
             --secondary-dark: #1F1F1F;
             --gold: #FFD700;
             --silver: #C0C0C0;
+            --bronze: #CD7F32;
             --instagram-pink: #E1306C;
             --text-light: #F5F5F5;
             --text-gray: #A0A0A0;
@@ -205,6 +206,7 @@
         }
         .status-lider { background: rgba(255, 215, 0, 0.15); color: var(--gold); border: 1px solid var(--gold); }
         .status-vice { background: rgba(192, 192, 192, 0.15); color: var(--silver); border: 1px solid var(--silver); }
+        .status-terceiro { background: rgba(205, 127, 50, 0.15); color: var(--bronze); border: 1px solid var(--bronze); }
         .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
         .status-default { color: var(--text-gray); }
 
@@ -293,7 +295,6 @@
     <section id="etapas" class="container">
         <h2 class="section-title">Calendário Oficial</h2>
         <div class="calendar-grid">
-            <!-- ETAPA 1 apontando para betim1.html -->
             <div class="card">
                 <div>
                     <span class="badge">ETAPA 1</span>
@@ -305,7 +306,6 @@
                 <a href="betim1.html" class="btn-card">🏆 Ver Resultados</a>
             </div>
 
-            <!-- ETAPA 2 -->
             <div class="card">
                 <div>
                     <span class="badge">ETAPA 2</span>
@@ -316,7 +316,6 @@
                 </div>
             </div>
 
-            <!-- ETAPA 3 -->
             <div class="card final">
                 <div>
                     <span class="badge" style="background-color: var(--gold); color: #000;">GRANDE FINAL (1.5x)</span>
@@ -507,6 +506,8 @@
                             statusHtml = '<span class="status-tag status-lider">👑 Líder</span>';
                         } else if (idx === 1 && p.pontos > 0) {
                             statusHtml = '<span class="status-tag status-vice">🥈 Vice-Líder</span>';
+                        } else if (idx === 2 && p.pontos > 0) {
+                            statusHtml = '<span class="status-tag status-terceiro">🥉 3º Lugar</span>';
                         } else {
                             statusHtml = '<span class="status-tag status-default">-</span>';
                         }
