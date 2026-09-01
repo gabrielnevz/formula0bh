@@ -106,7 +106,7 @@
         .status-dns { background: rgba(229, 9, 20, 0.15); color: var(--primary-red); border: 1px solid var(--primary-red); }
         .status-disputar { background: var(--secondary-dark); color: var(--text-gray); border: 1px solid var(--border-color); }
 
-        .dob-badge {
+        .age-badge {
             color: var(--text-gray);
             font-size: 0.85rem;
             display: flex;
@@ -186,7 +186,7 @@
                 <h1 id="piloto-nome">Carregando...</h1>
                 <div class="info-badges">
                     <span id="piloto-status" class="status-badge status-disputar">A disputar</span>
-                    <span class="dob-badge" id="piloto-nascimento" style="display: none;"></span>
+                    <span class="age-badge" id="piloto-idade" style="display: none;"></span>
                 </div>
             </div>
         </div>
@@ -408,11 +408,12 @@
                     statusBadge.innerText = 'A disputar';
                 }
                 
+                // Exibe apenas a idade calculada
                 if (infoExtra.nascimento) {
                     const idade = calcularIdade(infoExtra.nascimento);
-                    const divNasc = document.getElementById('piloto-nascimento');
-                    divNasc.style.display = 'flex';
-                    divNasc.innerHTML = `🎂 ${infoExtra.nascimento} <strong>(${idade} anos)</strong>`;
+                    const divIdade = document.getElementById('piloto-idade');
+                    divIdade.style.display = 'flex';
+                    divIdade.innerHTML = `🎂 <strong>${idade} anos</strong>`;
                 }
                 
                 let caminhoFoto = piloto.foto.replace('../', '').replace(/^\//, '');
