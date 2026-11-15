@@ -295,6 +295,7 @@
     <section id="etapas" class="container">
         <h2 class="section-title">Calendário Oficial</h2>
         <div class="calendar-grid">
+            <!-- ETAPA 1 -->
             <div class="card">
                 <div>
                     <span class="badge">ETAPA 1</span>
@@ -306,16 +307,19 @@
                 <a href="betim1.html" class="btn-card">🏆 Ver Resultados</a>
             </div>
 
+            <!-- ETAPA 2 -->
             <div class="card">
                 <div>
                     <span class="badge">ETAPA 2</span>
-                    <h3>01 de Novembro</h3>
-                    <p>📍 <strong>Local:</strong> Vespasiano</p>
-                    <p>🕒 <strong>Horário:</strong> A definir</p>
-                    <p style="margin-top: 0.5rem;">Segunda etapa da temporada no tradicional traçado de Vespasiano.</p>
+                    <h3>15 de Novembro</h3>
+                    <p>📍 <strong>Local:</strong> Vespasiano (RBC Racing)</p>
+                    <p>🕒 <strong>Largada:</strong> 15h50</p>
+                    <p style="margin-top: 0.5rem; margin-bottom: 1.5rem;">Segunda etapa da temporada no tradicional traçado do Kartódromo RBC Racing.</p>
                 </div>
+                <a href="vespasiano2.html" class="btn-card">🏆 Ver Resultados</a>
             </div>
 
+            <!-- ETAPA 3 -->
             <div class="card final">
                 <div>
                     <span class="badge" style="background-color: var(--gold); color: #000;">GRANDE FINAL (1.5x)</span>
@@ -445,7 +449,8 @@
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
                 const data = await response.text();
-                const lines = data.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
+                const lines = data.trim().split(/?
+/).filter(l => l.trim().length > 0);
                 
                 lines.shift();
                 

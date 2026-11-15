@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2ª Etapa - Vespasiano | FORMULA 0 BH</title>
+    
+    <link rel="icon" type="image/png" href="img/logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0A0A0A;
+            --card-bg: #141414;
+            --primary-red: #E50914;
+            --primary-red-hover: #ff2a36;
+            --secondary-dark: #1F1F1F;
+            --gold: #FFD700;
+            --silver: #C0C0C0;
+            --bronze: #CD7F32;
+            --text-light: #F5F5F5;
+            --text-gray: #A0A0A0;
+            --border-color: #2A2A2A;
+            --badge-pole: #3498db;
+            --badge-vr: #9b59b6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-light); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+
+        header {
+            background: rgba(10, 10, 10, 0.95);
+            border-bottom: 2px solid var(--primary-red);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { font-weight: 900; font-size: 1.3rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; text-decoration: none; }
+        .logo span { color: var(--primary-red); }
+
+        .back-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--text-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            transition: 0.2s;
+        }
+        .back-btn:hover { background-color: var(--primary-red); color: #fff; }
+
+        .container { max-width: 1050px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; }
+
+        .stage-header {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-red);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .stage-badge {
+            display: inline-block;
+            background: var(--secondary-dark);
+            color: var(--primary-red);
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .stage-header h1 { font-size: 2.2rem; font-weight: 900; text-transform: uppercase; }
+        .stage-header p { color: var(--text-gray); font-size: 1rem; margin-top: 0.3rem; }
+
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem;
+            text-align: center;
+        }
+
+        .highlight-card.winner { border-top: 3px solid var(--gold); }
+        .highlight-card.pole { border-top: 3px solid var(--badge-pole); }
+        .highlight-card.vr { border-top: 3px solid var(--badge-vr); }
+
+        .highlight-label { font-size: 0.8rem; color: var(--text-gray); text-transform: uppercase; font-weight: 700; }
+        .highlight-name { font-size: 1.15rem; font-weight: 900; color: var(--text-light); margin-top: 0.3rem; }
+        .highlight-sub { font-size: 0.8rem; color: var(--text-gray); margin-top: 0.2rem; font-family: 'JetBrains Mono', monospace; }
+
+        .tabs-nav {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: var(--secondary-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary-red);
+            border-color: var(--primary-red);
+            color: #fff;
+        }
+
+        .tab-btn:hover:not(.active) { border-color: var(--primary-red); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            margin-bottom: 2rem;
+        }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 0.9rem 1.1rem; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
+        th { background-color: var(--secondary-dark); color: var(--primary-red); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
+        tr:nth-child(even) { background-color: rgba(255,255,255,0.02); }
+
+        .mono { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; }
+        .pilot-link { color: var(--primary-red); text-decoration: none; font-weight: 700; }
+        .pilot-link:hover { text-decoration: underline; }
+        .pilot-external { color: var(--text-gray); font-style: italic; font-size: 0.85rem; }
+
+        .extra-badge {
+            display: inline-flex;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.15rem 0.45rem;
+            border-radius: 3px;
+            margin-left: 0.3rem;
+        }
+        .badge-pole { background: rgba(52, 152, 219, 0.2); color: #3498db; border: 1px solid #3498db; }
+        .badge-vr { background: rgba(155, 89, 182, 0.2); color: #9b59b6; border: 1px solid #9b59b6; }
+
+        .pdf-action-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.5rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .pdf-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary-red);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: 0.2s;
+        }
+        .pdf-btn:hover { background-color: var(--primary-red); color: #fff; }
+
+        footer { text-align: center; padding: 1.5rem; background-color: #050505; color: var(--text-gray); font-size: 0.85rem; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">FORMULA 0 <span>BH</span></a>
+        <a href="index.html" class="back-btn">← Voltar à Home</a>
+    </header>
+
+    <div class="container">
+        <div class="stage-header">
+            <span class="stage-badge">ETAPA 2</span>
+            <h1>GP de Vespasiano 2026</h1>
+            <p>📅 15 de Novembro de 2026 | 📍 Kartódromo RBC Racing (Traçado 1 - 15h50)</p>
+        </div>
+
+        <div class="highlights-grid">
+            <div class="highlight-card winner">
+                <div class="highlight-label">🥇 Vencedor da Etapa</div>
+                <div class="highlight-name" id="highlight-winner">Henrique Malvar Rios</div>
+                <div class="highlight-sub">Tempo Total: 20:29.199 (11 voltas)</div>
+            </div>
+            <div class="highlight-card pole">
+                <div class="highlight-label">⏱️ Pole Position (+1 pt)</div>
+                <div class="highlight-name" id="highlight-pole">-</div>
+                <div class="highlight-sub">Bateria Aberta 15:50</div>
+            </div>
+            <div class="highlight-card vr">
+                <div class="highlight-label">⚡ Volta Mais Rápida (+1 pt)</div>
+                <div class="highlight-name" id="highlight-vr">Henrique Malvar Rios</div>
+                <div class="highlight-sub">01:43.374 (Volta 11 - 38,66 km/h)</div>
+            </div>
+        </div>
+
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab('f0-tab')">🏆 Pontuação do Campeonato F0</button>
+            <button class="tab-btn" onclick="switchTab('timing-tab')">⏱️ Relatório Oficial de Cronometragem (RBC Racing)</button>
+        </div>
+
+        <div id="f0-tab" class="tab-content active">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pos.</th>
+                            <th>Piloto</th>
+                            <th>Bônus</th>
+                            <th>Pontos Conquistados</th>
+                        </tr>
+                    </thead>
+                    <tbody id="etapa-tbody">
+                        <tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Carregando resultados da planilha oficial...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="timing-tab" class="tab-content">
+            <div class="pdf-action-bar">
+                <div>
+                    <strong>📄 Documento Oficial de Pista</strong>
+                    <p style="color: var(--text-gray); font-size: 0.8rem;">Bateria Aberta 15:50 | 15/11/2026 17:13:11 | RBC Racing (LapTime)</p>
+                </div>
+                <a href="Resultado_Oficial_Corrida.pdf" target="_blank" class="pdf-btn">📥 Abrir PDF Original</a>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>POS</th>
+                            <th>#</th>
+                            <th>Nome do Competidor</th>
+                            <th>MV</th>
+                            <th>TMV</th>
+                            <th>TT</th>
+                            <th>Gap</th>
+                            <th>INT</th>
+                            <th>T.U.V</th>
+                            <th>TV</th>
+                            <th>V.Med</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: rgba(229, 9, 20, 0.08);"><td><strong>1º</strong></td><td class="mono">23</td><td><strong>Henrique Malvar Rios</strong> <span class="extra-badge badge-vr">⚡ VR</span></td><td class="mono">11</td><td class="mono" style="color: var(--badge-vr); font-weight: 700;">01:43.374</td><td class="mono">20:29.199</td><td class="mono">-</td><td class="mono">-</td><td class="mono">01:43.374</td><td class="mono">11</td><td class="mono">38,66 km/h</td></tr>
+                        <tr><td><strong>2º</strong></td><td class="mono">17</td><td><strong>Arthur Coelho Barreto</strong></td><td class="mono">9</td><td class="mono">01:48.757</td><td class="mono">21:34.598</td><td class="mono">+1:05.399</td><td class="mono">+1:05.399</td><td class="mono">01:54.524</td><td class="mono">11</td><td class="mono">36,71 km/h</td></tr>
+                        <tr><td><strong>3º</strong></td><td class="mono">35</td><td><strong>Gabriel Neves Costa</strong></td><td class="mono">10</td><td class="mono">01:52.319</td><td class="mono">21:44.706</td><td class="mono">+1:15.507</td><td class="mono">+0:10.108</td><td class="mono">01:52.559</td><td class="mono">11</td><td class="mono">36,42 km/h</td></tr>
+                        <tr><td><strong>4º</strong></td><td class="mono">75</td><td>Fernando Lara <span class="pilot-external">(Conv.)</span></td><td class="mono">11</td><td class="mono">01:49.782</td><td class="mono">22:11.356</td><td class="mono">+1:42.157</td><td class="mono">+0:26.650</td><td class="mono">01:49.782</td><td class="mono">11</td><td class="mono">35,69 km/h</td></tr>
+                        <tr><td><strong>5º</strong></td><td class="mono">12</td><td><strong>João Victor Rezende Silva</strong></td><td class="mono">7</td><td class="mono">01:50.534</td><td class="mono">20:53.748</td><td class="mono">-1 volta</td><td class="mono">-1 volta</td><td class="mono">02:19.924</td><td class="mono">10</td><td class="mono">34,46 km/h</td></tr>
+                        <tr><td><strong>6º</strong></td><td class="mono">40</td><td><strong>Marcello de Freitas Maia Mascarenhas</strong></td><td class="mono">10</td><td class="mono">01:55.927</td><td class="mono">21:41.327</td><td class="mono">-1 volta</td><td class="mono">+0:47.579</td><td class="mono">01:55.927</td><td class="mono">10</td><td class="mono">33,20 km/h</td></tr>
+                        <tr><td><strong>7º</strong></td><td class="mono">07</td><td>Gabriel Mendes <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">01:51.944</td><td class="mono">21:43.623</td><td class="mono">-1 volta</td><td class="mono">+0:02.296</td><td class="mono">01:55.400</td><td class="mono">10</td><td class="mono">33,14 km/h</td></tr>
+                        <tr><td><strong>8º</strong></td><td class="mono">74</td><td>Arlisson Alves Dias <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">01:57.152</td><td class="mono">21:47.134</td><td class="mono">-1 volta</td><td class="mono">+0:03.511</td><td class="mono">02:12.136</td><td class="mono">10</td><td class="mono">33,05 km/h</td></tr>
+                        <tr><td><strong>9º</strong></td><td class="mono">54</td><td>Daniel Maia Mairink <span class="pilot-external">(Conv.)</span></td><td class="mono">4</td><td class="mono">02:10.066</td><td class="mono">22:11.227</td><td class="mono">-2 voltas</td><td class="mono">-1 volta</td><td class="mono">02:26.097</td><td class="mono">9</td><td class="mono">29,21 km/h</td></tr>
+                        <tr><td><strong>10º</strong></td><td class="mono">04</td><td>Jéssica De Jesus Garcia <span class="pilot-external">(Conv.)</span></td><td class="mono">9</td><td class="mono">02:11.366</td><td class="mono">22:35.695</td><td class="mono">-2 voltas</td><td class="mono">+0:24.468</td><td class="mono">02:11.366</td><td class="mono">9</td><td class="mono">28,68 km/h</td></tr>
+                        <tr><td><strong>11º</strong></td><td class="mono">63</td><td>Rafael Acácio De Almeida <span class="pilot-external">(Conv.)</span></td><td class="mono">2</td><td class="mono">02:03.570</td><td class="mono">22:36.433</td><td class="mono">-2 voltas</td><td class="mono">+0:00.738</td><td class="mono">02:24.238</td><td class="mono">9</td><td class="mono">28,66 km/h</td></tr>
+                        <tr><td><strong>12º</strong></td><td class="mono">55</td><td><strong>Flávio Carvalho Brandão</strong></td><td class="mono">8</td><td class="mono">02:01.088</td><td class="mono">20:41.631</td><td class="mono">-3 voltas</td><td class="mono">-1 volta</td><td class="mono">02:01.088</td><td class="mono">8</td><td class="mono">27,83 km/h</td></tr>
+                        <tr><td><strong>13º</strong></td><td class="mono">70</td><td>Debora Lorrayne Santos Da Silva <span class="pilot-external">(Conv.)</span></td><td class="mono">3</td><td class="mono">02:26.420</td><td class="mono">21:07.562</td><td class="mono">-3 voltas</td><td class="mono">+0:25.931</td><td class="mono">02:35.253</td><td class="mono">8</td><td class="mono">27,26 km/h</td></tr>
+                        <tr><td><strong>14º</strong></td><td class="mono">42</td><td>Pedro Antunes Dias <span class="pilot-external">(Conv.)</span></td><td class="mono">7</td><td class="mono">02:08.894</td><td class="mono">21:09.447</td><td class="mono">-3 voltas</td><td class="mono">+0:01.885</td><td class="mono">03:07.047</td><td class="mono">8</td><td class="mono">27,22 km/h</td></tr>
+                        <tr><td><strong>15º</strong></td><td class="mono">34</td><td>Jones Felipe Santos Silva <span class="pilot-external">(Conv.)</span></td><td class="mono">8</td><td class="mono">02:10.551</td><td class="mono">21:33.045</td><td class="mono">-3 voltas</td><td class="mono">+0:23.598</td><td class="mono">02:10.551</td><td class="mono">8</td><td class="mono">26,73 km/h</td></tr>
+                        <tr><td><strong>16º</strong></td><td class="mono">10</td><td>João Pedro Lara <span class="pilot-external">(Conv.)</span></td><td class="mono">7</td><td class="mono">01:57.572</td><td class="mono">21:38.520</td><td class="mono">-3 voltas</td><td class="mono">+0:05.475</td><td class="mono">02:20.352</td><td class="mono">8</td><td class="mono">26,61 km/h</td></tr>
+                        <tr><td><strong>17º</strong></td><td class="mono">47</td><td>Marcela Frias Braga <span class="pilot-external">(Conv.)</span></td><td class="mono">7</td><td class="mono">02:10.098</td><td class="mono">20:47.097</td><td class="mono">-4 voltas</td><td class="mono">-1 volta</td><td class="mono">02:10.098</td><td class="mono">7</td><td class="mono">24,25 km/h</td></tr>
+                        <tr><td><strong>18º</strong></td><td class="mono">31</td><td>Enzo Drumond Gonçalves Terenzi <span class="pilot-external">(Conv.)</span></td><td class="mono">4</td><td class="mono">02:20.738</td><td class="mono">20:31.354</td><td class="mono">-5 voltas</td><td class="mono">-1 volta</td><td class="mono">04:39.195</td><td class="mono">6</td><td class="mono">21,05 km/h</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>FORMULA 0 BH &copy; 2026 — 2ª Etapa Vespasiano</p>
+    </footer>
+
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tabId === 'f0-tab') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            }
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function parseCSVLine(text) {
+            let p = '', c = false, r = [];
+            for (let i = 0; i < text.length; i++) {
+                let ch = text[i];
+                if (ch === '"') { c = !c; }
+                else if (ch === ',' && !c) { r.push(p); p = ''; }
+                else { p += ch; }
+            }
+            r.push(p);
+            return r.map(x => x.replace(/^"|"$/g, '').trim());
+        }
+
+        function extrairPosicao(val) {
+            if (!val || val === '-' || val.toLowerCase().includes('disputar')) return null;
+            const match = val.match(/\d+/);
+            return match ? parseInt(match[0], 10) : null;
+        }
+
+        async function carregarResultadoEtapa() {
+            try {
+                const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
+                const data = await response.text();
+                const lines = data.trim().split(/?
+/).filter(l => l.trim().length > 0);
+                lines.shift();
+
+                const resultados = [];
+                let poleWinner = '-';
+                let vrWinner = '-';
+                let raceWinner = '-';
+
+                lines.forEach(line => {
+                    const row = parseCSVLine(line);
+                    const posRaw = row[6] || '-';
+                    const ptsRaw = parseFloat(row[7]) || 0;
+                    const posNum = extrairPosicao(posRaw);
+                    const isDNS = posRaw.toUpperCase().includes('DNS');
+                    const isPole = posRaw.toUpperCase().includes('POLE');
+                    const isVR = posRaw.toUpperCase().includes('VR');
+                    const nome = row[1] || '';
+                    const id = row[0] || '';
+
+                    if (isPole) poleWinner = nome;
+                    if (isVR) vrWinner = nome;
+                    if (posNum === 1) raceWinner = nome;
+
+                    if (posNum !== null || isDNS) {
+                        resultados.push({
+                            id: id,
+                            nome: nome,
+                            posNum: posNum !== null ? posNum : 999,
+                            posRaw: posRaw,
+                            pts: ptsRaw,
+                            isDNS: isDNS,
+                            isPole: isPole,
+                            isVR: isVR
+                        });
+                    }
+                });
+
+                if (raceWinner !== '-') document.getElementById('highlight-winner').innerText = raceWinner;
+                if (poleWinner !== '-') document.getElementById('highlight-pole').innerText = poleWinner;
+                if (vrWinner !== '-') document.getElementById('highlight-vr').innerText = vrWinner;
+
+                resultados.sort((a, b) => a.posNum - b.posNum);
+
+                const tbody = document.getElementById('etapa-tbody');
+                tbody.innerHTML = '';
+
+                if (resultados.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: var(--text-gray);">Resultados ainda não computados na planilha.</td></tr>';
+                    return;
+                }
+
+                resultados.forEach((r) => {
+                    let posExibicao = `${r.posNum}º`;
+                    if (r.isDNS) posExibicao = '<span style="color: var(--primary-red); font-weight: 700;">DNS</span>';
+                    else if (r.posNum === 1) posExibicao = '🥇 1º';
+                    else if (r.posNum === 2) posExibicao = '🥈 2º';
+                    else if (r.posNum === 3) posExibicao = '🥉 3º';
+
+                    let badges = '';
+                    if (r.isPole) badges += '<span class="extra-badge badge-pole">⏱️ Pole (+1)</span>';
+                    if (r.isVR) badges += '<span class="extra-badge badge-vr">⚡ VR (+1)</span>';
+                    if (!badges) badges = '<span style="color: var(--text-gray);">-</span>';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${posExibicao}</strong></td>
+                        <td><a href="perfil.html?id=${encodeURIComponent(r.id)}" class="pilot-link">${r.nome}</a></td>
+                        <td>${badges}</td>
+                        <td><strong>${r.pts} pts</strong></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+                document.getElementById('etapa-tbody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: red;">Erro ao carregar os dados da etapa.</td></tr>';
+            }
+        }
+
+        carregarResultadoEtapa();
+    </script>
+</body>
+</html>
