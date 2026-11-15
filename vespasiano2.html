@@ -309,7 +309,7 @@
     </footer>
 
     <script>
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?gid=355696460&single=true&output=csv';
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR8uHwMzcTHu8Ei0WQYBCK8Z-RFHn0owtJlf1dOamFs7lh1RfT3dgCEGFk1aPf17It_uXQc-VaBDvqw/pub?output=csv';
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -345,7 +345,8 @@
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
                 const data = await response.text();
-                const lines = data.trim().split(/?
+                const lines = data.trim().split(/
+?
 /).filter(l => l.trim().length > 0);
                 lines.shift();
 
