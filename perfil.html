@@ -316,9 +316,7 @@
             try {
                 const response = await fetch(CSV_URL + '&_t=' + new Date().getTime());
                 const data = await response.text();
-                const lines = data.trim().split(/
-?
-/).filter(l => l.trim().length > 0);
+                const lines = data.trim().split(/\r?\n/).filter(l => l.trim().length > 0);
                 
                 lines.shift();
                 
